@@ -1,0 +1,31 @@
+{
+  "name": "aloha-manga",
+  "private": true,
+  "engines": {
+    "node": "14"
+  },
+  "workspaces": [
+    "api",
+    "client-api",
+    "types",
+    "web"
+  ],
+  "scripts": {
+    "region": "scripts/set-region.sh",
+    "aws:profile": "scripts/setup-aws-profile.sh",
+    "rename": "./scripts/rename.sh",
+    "add:env:local": "./scripts/add-env-var.sh local",
+    "add:env:dev": "./scripts/add-env-var.sh dev",
+    "add:env:prod": "./scripts/add-env-var.sh prod",
+    "generate:env:local": "./scripts/generate-env-vars.sh local",
+    "generate:env:dev": "./scripts/generate-env-vars.sh dev",
+    "generate:env:prod": "./scripts/generate-env-vars.sh prod"
+  },
+  "devDependencies": {
+    "@types/node": "18.0.0"
+  },
+  "resolutions": {
+    "@types/react": "17.0.2",
+    "@types/react-native": "0.68.2"
+  }
+}

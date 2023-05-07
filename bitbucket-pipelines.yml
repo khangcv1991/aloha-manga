@@ -1,0 +1,78 @@
+image: atlassian/default-image:3
+
+pipelines:
+  branches:
+    '{main,prod}':
+      - step:
+          name: Deploy API
+          size: 2x
+          script:
+            - touch ~/.bash_profile
+            - . ./scripts/setup-npm.sh
+            - . ./scripts/setup-aws.sh
+            - ./scripts/deploy.sh api
+          caches:
+            - nodecustom
+      - step:
+          name: Deploy Web
+          size: 2x
+          script:
+            - touch ~/.bash_profile
+            - . ./scripts/setup-npm.sh
+            - . ./scripts/setup-aws.sh
+            - . ./scripts/pipeline-env-vars.sh
+            - ./scripts/deploy.sh web
+          caches:
+            - nodecustom
+  default:
+    - parallel:
+      - step:
+          name: Lint API
+          size: 2x
+          script:
+            - touch ~/.bash_profile
+            - . ./scripts/setup-npm.sh
+            - yarn
+            - cd api
+            - yarn run lint
+          caches:
+            - nodecustom
+      - step:
+          name: Lint Web
+          size: 2x
+          script:
+            - touch ~/.bash_profile
+            - . ./scripts/setup-npm.sh
+            - yarn
+            - cd web
+            - yarn run lint
+          caches:
+            - nodecustom
+      - step:
+          name: Build API
+          size: 2x
+          script:
+            - touch ~/.bash_profile
+            - . ./scripts/setup-npm.sh
+            - . ./scripts/setup-aws.sh
+            - yarn
+            - cd api
+            - yarn build
+          caches:
+            - nodecustom
+      - step:
+          name: Build Web
+          size: 2x
+          script:
+            - touch ~/.bash_profile
+            - . ./scripts/setup-npm.sh
+            - . ./scripts/setup-aws.sh
+            - yarn
+            - cd web
+            - yarn build
+          caches:
+            - nodecustom
+
+definitions:
+  caches:
+    nodecustom: ./node_modules

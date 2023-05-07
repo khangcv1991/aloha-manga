@@ -1,0 +1,32 @@
+@use '../../styles/colors';
+@use '../../styles/layout';
+@use '../../styles/mixins';
+
+.searchBarContainer{
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    input{
+        display:flex;
+        padding: 10px;
+        height: 40px ;
+        min-width: 250px;
+        border: 1px solid #fd606d;
+        border-radius: 30px;
+        border-bottom-right-radius: 0px;
+        border-top-right-radius: 0px;
+        font-size: 16px;
+    }
+
+    button{
+        font-family: 'Montserrat Regular', Arial, sans-serif;
+        padding: 10px;
+        border: 1px solid #fd606d;
+        border-left: 0px;
+        border-bottom-right-radius: 30px;
+        border-top-right-radius: 30px;
+        color: white;
+        background-color:#fd606d ;
+        font-size: 16px;
+    }
+}
