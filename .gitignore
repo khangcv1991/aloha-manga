@@ -63,7 +63,4 @@ tsconfig.tsbuildinfo
 #manga
 /scripts/scrapy-data
 /scripts/manga
-<<<<<<< HEAD
-=======
 /scripts/manga.db
->>>>>>> update-scripts
