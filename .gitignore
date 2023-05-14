@@ -61,6 +61,6 @@ yarn-error.log*
 .esbuild
 tsconfig.tsbuildinfo
 #manga
-/scripts/scrapy-data
-/scripts/manga
-/scripts/manga.db
+/data-process/scripts/scrapy-data
+/data-process/scripts/manga
+/data-process/scripts/manga.db
