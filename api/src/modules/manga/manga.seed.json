@@ -1,0 +1,26 @@
+[
+  {
+    "mangaId": "1",
+    "title": "Manga 1",
+    "author": "Author 1",
+    "description": "Description 1",
+    "categories": ["Category 1", "Category 2"],
+    "imageLink": "https://example.com/image1.jpg"
+  },
+  {
+    "mangaId": "2",
+    "title": "Manga 2",
+    "author": "Author 2",
+    "description": "Description 2",
+    "categories": ["Category 3", "Category 4"],
+    "imageLink": "https://example.com/image2.jpg"
+  },
+  {
+    "mangaId": "3",
+    "title": "Manga 3",
+    "author": "Author 3",
+    "description": "Description 3",
+    "categories": ["Category 5", "Category 6"],
+    "imageLink": "https://example.com/image3.jpg"
+  }
+]

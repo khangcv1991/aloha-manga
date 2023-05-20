@@ -1,0 +1,60 @@
+service: ${env:PROFILE}-api
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage}
+  region: ${opt:region}
+  environment:
+    DYNAMODB_ENDPOINT: http://localhost:8000
+    API_REGION: ${opt:region}
+    MANGA_TABLE: manga-${param:profile}-${opt:stage}
+    API_CORS_ORIGIN: ${self:custom.apiCorsOrigin}
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource: 
+        - !Sub ${mangaTable.Arn}
+        - !Sub ${mangaTable.Arn}/index/* 
+resources:
+  - ${file(./src/modules/manga/manga-dynamodb.yml)}
+functions:
+  - ${file(./src/modules/manga/manga-functions.yml)}
+
+plugins:
+  - serverless-offline
+  - serverless-esbuild
+  - serverless-dynamodb-local
+
+custom:
+  apiCorsOrigin: '*'
+  esbuild:
+    minify: false
+    packager: npm
+    keepOutputDirectory: true
+    sourcemap: linked # to reduce the size of deployed code you can remove source maps
+    watch:
+      pattern: ['src/**/*.ts']
+      ignore:
+        [
+          'scripts/**/*',
+          '.build/**/*',
+          '.dynamodb/**/*',
+          '.serverless/**/*',
+          '.esbuild/**/*',
+          'node_modules/**/*',
+        ]
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+    seed:
+      local:
+        sources:
+          - table: manga-${param:profile}-${opt:stage}
+            sources: [./src/modules/manga/manga.seed.json]
+  serverless-offline:
+    httpPort: 400
