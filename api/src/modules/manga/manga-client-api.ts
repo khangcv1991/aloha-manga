@@ -3,6 +3,7 @@ import * as AWS from 'aws-sdk';
 import createApp from '../../util/express-ap';
 import createAuthenticatedHandler from '../../util/create-authenticated-handler';
 import { RequestContext } from '../../util/request-context.type';
+import { mangatService } from './manga.service';
 
 AWS.config.update({ region: process.env.API_REGION });
 const app = createApp();
@@ -10,7 +11,9 @@ const app = createApp();
 app.get('/client/manga/list', [
   async (req: RequestContext, res: Response) => {
     try {
-      res.json({});
+      const mangas = await mangatService.getAll();
+      console.log(mangas.length);
+      res.json(mangas);
     } catch (error) {
       console.error(`Failed to get posts: ${error}`);
       res.status(400).json({
@@ -23,11 +26,12 @@ app.get('/client/manga/list', [
 app.get('/client/manga/:mangaId', [
   async (req: RequestContext, res: Response) => {
     try {
-      res.json({});
+      const manga = await mangatService.get(req.params.mangaId);
+      res.json(manga);
     } catch (error) {
-      console.error(`Failed to get post: ${error}`);
+      console.error(`Failed to get manga: ${error}`);
       res.status(400).json({
-        error: 'Failed to get post',
+        error: 'Failed to get manga',
       });
     }
   },

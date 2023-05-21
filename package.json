@@ -7,7 +7,7 @@
   "workspaces": [
     "api",
     "client-api",
-    "types",
+    "shared",
     "web"
   ],
   "scripts": {

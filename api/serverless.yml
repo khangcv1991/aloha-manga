@@ -3,11 +3,16 @@ provider:
   name: aws
   runtime: nodejs14.x
   stage: ${opt:stage}
-  region: ${opt:region}
+  region: ${env:REGION}
+  architecture: arm64
+  timeout: 30
+  memorySize: 2048
+  logRetentionInDays: 90
+  versionFunctions: false
   environment:
     DYNAMODB_ENDPOINT: http://localhost:8000
-    API_REGION: ${opt:region}
-    MANGA_TABLE: manga-${param:profile}-${opt:stage}
+    API_REGION: ${env:REGION}
+    MANGA_TABLE: manga-${env:PROFILE}-${opt:stage}
     API_CORS_ORIGIN: ${self:custom.apiCorsOrigin}
 
   iamRoleStatements:
@@ -23,10 +28,11 @@ functions:
   - ${file(./src/modules/manga/manga-functions.yml)}
 
 plugins:
-  - serverless-offline
   - serverless-esbuild
   - serverless-dynamodb-local
-
+  - serverless-dynamodb-seed
+  - serverless-offline-watcher
+  - serverless-offline
 custom:
   apiCorsOrigin: '*'
   esbuild:
@@ -35,7 +41,7 @@ custom:
     keepOutputDirectory: true
     sourcemap: linked # to reduce the size of deployed code you can remove source maps
     watch:
-      pattern: ['src/**/*.ts']
+      pattern: ['src/**/*.ts'] # match only typescript files in src directory
       ignore:
         [
           'scripts/**/*',
@@ -51,10 +57,16 @@ custom:
     start:
       port: 8000
       inMemory: true
+      migrate: true
+      seed: true
     seed:
       local:
         sources:
-          - table: manga-${param:profile}-${opt:stage}
+          - table: manga-${env:PROFILE}-${opt:stage}
             sources: [./src/modules/manga/manga.seed.json]
   serverless-offline:
-    httpPort: 400
+    httpPort: 4000
+  serverless-offline-watcher:
+    - path: src/**/*.ts
+      command: echo "*.ts was modified!"
+    

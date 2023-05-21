@@ -26,7 +26,7 @@ export class ServiceObject<T> {
   }
 
   async getAll(): Promise<T[]> {
-    console.log(`Get all ${this.objectName} records`);
+    console.log(`Get all ${this.objectName} records from ${this.table}`);
     try {
       return getAll<T>({
         dynamoDb: this.dynamoDb,
@@ -40,7 +40,9 @@ export class ServiceObject<T> {
   }
 
   async get(key: string): Promise<T> {
-    console.log(`Get ${this.objectName} by ${this.primaryKey} [${key}]`);
+    console.log(
+      `Get ${this.objectName} by ${this.primaryKey} [${key}] from ${this.table}`,
+    );
     try {
       return await get<T>({
         dynamoDb: this.dynamoDb,
@@ -57,7 +59,7 @@ export class ServiceObject<T> {
   }
 
   async create(record: Partial<T>): Promise<T> {
-    console.log(`Create ${this.objectName}`);
+    console.log(`Create ${this.objectName} from ${this.table}`);
     try {
       const item: Partial<T> = {
         [this.primaryKey]: randomUUID(),
@@ -79,7 +81,7 @@ export class ServiceObject<T> {
     console.log(
       `Update ${this.objectName} ${this.primaryKey} [${
         record[this.primaryKey]
-      }]`,
+      }] from ${this.table}`,
     );
     try {
       if (!record[this.primaryKey]) {
@@ -107,7 +109,7 @@ export class ServiceObject<T> {
   }
 
   async delete(key: string): Promise<boolean> {
-    console.log(`Delete ${this.objectName} ${key}`);
+    console.log(`Delete ${this.objectName} ${key} from ${this.table}`);
     try {
       return await deleteItem({
         dynamoDb: this.dynamoDb,
@@ -123,7 +125,7 @@ export class ServiceObject<T> {
   }
 
   async batchGet(ids: string[]): Promise<T[]> {
-    console.log(`Getting all ${this.objectName} by ids`);
+    console.log(`Getting all ${this.objectName} by ids from ${this.table}`);
     try {
       return await batchGet<T>({
         dynamoDb: this.dynamoDb,

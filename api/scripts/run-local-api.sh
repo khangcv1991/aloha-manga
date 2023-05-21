@@ -41,10 +41,11 @@ npx serverless dynamodb install --stage dev --region $REGION --param=\"profile=$
 export NODE_OPTIONS=--enable-source-maps
 
 # Start the API with serverless
-# npx serverless install plugin --name serverless-dynamodb-local
-# npx serverless install plugin --name serverless-offline
-# npx serverless install plugin --name serverless-esbuild 
+# npx serverless  plugin install --name serverless-dynamodb-local
+# npx serverless  plugin  install --name serverless-offline
+# npx serverless  plugin  install--name serverless-esbuild 
+# npx serverless  plugin  install --name serverless-offline-watcher
 
-npx serverless offline start --stage dev --region "$REGION" --param="profile=${PROFILE}" --httpPort 4000 "$@"
+npx serverless offline start --stage dev --region "$REGION" --param="profile=${PROFILE}" --reloadHandler
 
 cd "$CURRENT_DIR" || exit

@@ -11,9 +11,12 @@
     "esModuleInterop": true,
     "lib": ["es2015"],
     "rootDir": "./",
-    "outDir": ".esbuild"
+    "outDir": ".esbuild",
+    "paths": {
+      "@shared/*": ["../shared/*"]
+    }
   },
-  "include": ["../../shared/types", "src"],
+  "include": ["../shared/types", "src"],
   "watchOptions": {
     "excludeDirectories": [
       "node_modules",

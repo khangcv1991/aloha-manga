@@ -35,7 +35,7 @@
 #             - X-Amz-Security-Token
 #             - X-Amz-User-Agent
 #           allowCredentials: false
-client-api-post:
+client-api-manga:
   handler: src/modules/manga/manga-client-api.handler
   events:
     - http:

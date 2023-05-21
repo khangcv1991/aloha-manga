@@ -13,7 +13,7 @@ export let dynamoDb: AWS.DynamoDB.DocumentClient | undefined = undefined;
 
 function newDynamodbConnection(): DocumentClient {
   console.log('DynamoDB Init');
-
+  console.log(`is offline ${IS_OFFLINE}`);
   const agent = new https.Agent({
     keepAlive: true,
     maxSockets: Infinity, // Infinity is read as 50 sockets

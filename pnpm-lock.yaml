@@ -1,0 +1,17 @@
+lockfileVersion: 5.4
+
+overrides:
+  '@types/react': 17.0.2
+  '@types/react-native': 0.68.2
+
+specifiers:
+  '@types/node': 18.0.0
+
+devDependencies:
+  '@types/node': 18.0.0
+
+packages:
+
+  /@types/node/18.0.0:
+    resolution: {integrity: sha512-cHlGmko4gWLVI27cGJntjs/Sj8th9aYwplmZFwmmgYQQvL5NUsgVJG7OddLvNfLqYS31KFN0s3qlaD9qCaxACA==}
+    dev: true
