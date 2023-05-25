@@ -1,12 +1,12 @@
 import { ServiceObject } from '../../util/service-object';
 import { getDynamodbConnection } from '../../util/dynamodb';
-import { Manga } from '@shared/types/Manga';
+import { Chapter } from '@shared/types/Chapter';
 
 const dynamoDb = getDynamodbConnection();
 
 export const mangatService = new ServiceObject<Chapter>({
   dynamoDb: dynamoDb,
-  objectName: 'Manga',
-  table: `${process.env.MANGA_TABLE}`,
-  primaryKey: 'mangaId',
+  objectName: 'Chapter',
+  table: `${process.env.CHAPTER_TABLE}`,
+  primaryKey: 'chapterLink',
 });

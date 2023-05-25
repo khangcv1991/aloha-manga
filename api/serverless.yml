@@ -13,6 +13,7 @@ provider:
     DYNAMODB_ENDPOINT: http://localhost:8000
     API_REGION: ${env:REGION}
     MANGA_TABLE: manga-${env:PROFILE}-${opt:stage}
+    CHAPTER_TABLE: chapter-${env:PROFILE}-${opt:stage}
     API_CORS_ORIGIN: ${self:custom.apiCorsOrigin}
 
   iamRoleStatements:
