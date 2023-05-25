@@ -6,7 +6,7 @@ import sys
 import time
 
 FOLDER_NAME = 'manga'
-DB_NAME = 'manga.db'
+DB_NAME = './scrapy-data/manga.db'
 
 start_index = sys.argv[1]
 batch_size = sys.argv[2]

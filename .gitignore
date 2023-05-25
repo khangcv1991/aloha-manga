@@ -61,6 +61,8 @@ yarn-error.log*
 .esbuild
 tsconfig.tsbuildinfo
 #manga
-/data-process/scripts/scrapy-data
-/data-process/scripts/manga
+/data-process/scrapy-data
+/data-process/manga
 /data-process/scripts/manga.db
+data-process/scripts/python-scripts/__pycache__/fetchMangaDetail.cpython-310.pyc
+data-process/scripts/python-scripts/__pycache__/fetchMangaLinks.cpython-310.pyc

@@ -1,0 +1,13 @@
+{
+  "name": "data-process",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "scrapy:links": "scrapy runspider ./scripts/python-scripts/fetchMangaLinks.py",
+    "scrapy:manga:detail": "scrapy runspider ./scripts/python-scripts/fetchMangaDetail.py",
+    "seed:manga": "python3 ./scripts/python-scripts/generateMangaSeed.py"
+  },
+  "author": "",
+  "license": "ISC"
+}
