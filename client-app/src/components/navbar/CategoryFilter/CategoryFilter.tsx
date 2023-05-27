@@ -1,13 +1,8 @@
 import React, { useState } from 'react';
 import styles from './category.module.scss';
 
-export interface Category {
-  id: string;
-  title: string;
-}
-
 interface CategoryFilterProps {
-  categories: Category[];
+  categories: string[];
   isMutiSelect: boolean;
 }
 
@@ -49,17 +44,17 @@ const CategoryFilter = (props: CategoryFilterProps) => {
         >
           All
         </li>
-        {categories?.map((item) => (
+        {categories?.map((category) => (
           <li
-            key={item.id}
+            key={category}
             onClick={(): void => {
-              onItemClick(item.id);
+              onItemClick(category);
             }}
             className={
-              selectedCategories?.has(item.id) ? styles.selectedItem : null
+              selectedCategories?.has(category) ? styles.selectedItem : null
             }
           >
-            {item.title}
+            {category}
           </li>
         ))}
       </ul>

@@ -14,7 +14,7 @@ const MangaList = (props: MangaListProps) => {
     <>
       <div className={styles.mangaListContainer}>
         {mangas.map((manga) => (
-          <MangaItem manga={manga} />
+          <MangaItem key={manga.mangaId} manga={manga} />
         ))}
       </div>
     </>

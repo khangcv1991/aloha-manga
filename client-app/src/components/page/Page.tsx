@@ -45,24 +45,6 @@ const Page = (props: Props): JSX.Element => {
       <script async src="https://kit.fontawesome.com/c6e566ba48.js" />
       <Navbar />
       {children}
-      {/* <MangaItem
-        mangaId="sssss"
-        title="test"
-        imgUrl="aaaaa"
-        categories={undefined}
-        updatedDate="aaaa"
-      /> */}
-      {/* <GroupRadioButton
-        radioButtons={[
-          { id: 'information', title: 'Information' },
-          { id: 'chapter', title: 'Chapter' },
-          { id: 'information', title: 'Information' },
-          { id: 'chapter', title: 'Chapter' },
-        ]}
-        setSelectedButton={setSelectedButton}
-        selectedButton={selectedButton}
-      /> */}
-      <MangaList mangas={mangas} />
       <Footer />
     </div>
   );

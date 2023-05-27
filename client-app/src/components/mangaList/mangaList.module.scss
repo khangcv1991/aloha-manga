@@ -1,0 +1,12 @@
+@use '../../styles/colors';
+@use '../../styles/layout';
+@use '../../styles/mixins';
+
+.mangaListContainer{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    width: fit-content;
+    justify-content: center;
+    margin: auto;
+}

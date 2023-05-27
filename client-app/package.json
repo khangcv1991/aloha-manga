@@ -35,7 +35,7 @@
   "bin": "./scripts/bin.js",
   "scripts": {
     "build": "NODE_OPTIONS=--max_old_space_size=8192 GENERATE_SOURCEMAP=false react-scripts build",
-    "start": "react-scripts start",
+    "start": "react-scripts start ",
     "deploy:dev": "npm run build && export AWS_PROFILE=aloha-manga && npx serverless deploy --verbose --stage dev --region ap-southeast-2 --param=\"profile=aloha-manga\" --param=\"bucketId=26344\"",
     "remove:dev": "export AWS_PROFILE=aloha-manga && npx serverless remove --stage dev --region ap-southeast-2 --param=\"profile=aloha-manga\" --param=\"bucketId=26344\"",
     "deploy:prod": "npm run build && export AWS_PROFILE=aloha-manga && npx serverless deploy --verbose --stage prod --region ap-southeast-2 --param=\"profile=aloha-manga\" --param=\"bucketId=26344\"",
@@ -50,6 +50,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "aws-amplify": "^5.2.4",
     "axios": "1.4.0",
     "lodash": "^4.17.21",
     "react": "17.0.2",

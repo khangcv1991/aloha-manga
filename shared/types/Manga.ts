@@ -5,6 +5,7 @@ export interface Manga {
   author: string;
   description: string;
   categories: string[];
+  chapterLinks: string[];
   imageLink: string;
 }
 

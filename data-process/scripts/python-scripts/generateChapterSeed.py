@@ -1,6 +1,7 @@
 import json
 import sqlite3
 import sys
+import ast
 
 DB_NAME = './scrapy-data/manga.db'
 WEB_URL = "https://hentai18.net"
@@ -24,7 +25,7 @@ def generate_dataseed_from_chapter_table():
         manga = {
             "chapterId": chapter_link.replace(WEB_URL, '').replace(PARAM_URL, ''),
             "chapterLink": WEB_URL + PARAM_URL,
-            "originalImageLinks": image_links,
+            "originalImageLinks": ast.literal_eval(image_links),
         }
 
         dataseed.append(manga)
