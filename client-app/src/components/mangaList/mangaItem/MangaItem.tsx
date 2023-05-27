@@ -1,17 +1,11 @@
 import React from 'react';
-import { Category } from '../navbar/CategoryFilter/CategoryFilter';
+import { Category } from '../../navbar/CategoryFilter/CategoryFilter';
 import styles from './manga.module.scss';
 import clockIconImage from './clock_icon.png';
+import { Manga } from '@shared/types/Manga';
 
-export interface Manga {
-  mangaId: string;
-  title: string;
-  imgUrl: string;
-  categories: Category;
-  updatedDate: string;
-}
-
-const mangaItem = (props: Manga) => {
+const MangaItem = (props: { manga: Manga }) => {
+  const { manga } = props;
   return (
     <div className={styles.container}>
       <div
@@ -45,4 +39,4 @@ const mangaItem = (props: Manga) => {
   );
 };
 
-export default mangaItem;
+export default MangaItem;
