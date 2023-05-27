@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import Footer from '../footer/Footer';
 import Navbar from '../navbar/Navbar';
 import styles from './page.module.scss';
-import MangaItem from '../mangaItem/mangaItem';
+import MangaItem from '../mangaList/mangaItem/MangaItem';
 import GroupRadioButton from '../navTab/GroupRadioButton';
+import MangaList from '../mangaList/MangaList';
+import { Manga } from '@shared/types/Manga';
 
 interface Props {
   title: string;
@@ -14,6 +16,7 @@ interface Props {
 const Page = (props: Props): JSX.Element => {
   const { title, description = title, children } = props;
   const [selectedButton, setSelectedButton] = useState();
+  const [mangas, setMangas] = useState<Manga[]>([]);
 
   return (
     <div className={styles.page}>
@@ -49,7 +52,7 @@ const Page = (props: Props): JSX.Element => {
         categories={undefined}
         updatedDate="aaaa"
       /> */}
-      <GroupRadioButton
+      {/* <GroupRadioButton
         radioButtons={[
           { id: 'information', title: 'Information' },
           { id: 'chapter', title: 'Chapter' },
@@ -58,7 +61,8 @@ const Page = (props: Props): JSX.Element => {
         ]}
         setSelectedButton={setSelectedButton}
         selectedButton={selectedButton}
-      />
+      /> */}
+      <MangaList mangas={mangas} />
       <Footer />
     </div>
   );
