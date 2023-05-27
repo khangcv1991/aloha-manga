@@ -60,6 +60,9 @@ yarn-error.log*
 #esbuild
 .esbuild
 tsconfig.tsbuildinfo
+#api
+/api/src/modules/chapter/chapter.seed.json
+/api/src/modules/manga/manga.seed.json
 #manga
 /data-process/scrapy-data
 /data-process/manga
