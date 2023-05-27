@@ -4,10 +4,10 @@ Resources:
     Properties:
       TableName: manga-${env:PROFILE}-${opt:stage}
       AttributeDefinitions:
-        - AttributeName: mangaLink
+        - AttributeName: mangaId
           AttributeType: S
       KeySchema:
-        - AttributeName: mangaLink
+        - AttributeName: mangaId
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
       PointInTimeRecoverySpecification:

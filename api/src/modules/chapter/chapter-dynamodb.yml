@@ -1,13 +1,13 @@
 Resources:
-  mangaTable:
+  chapterTable:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: chapter-${env:PROFILE}-${opt:stage}
       AttributeDefinitions:
-        - AttributeName: chapterLink
+        - AttributeName: chapterId
           AttributeType: S
       KeySchema:
-        - AttributeName: chapterLink
+        - AttributeName: chapterId
           KeyType: HASH
       BillingMode: PAY_PER_REQUEST
       PointInTimeRecoverySpecification:

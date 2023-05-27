@@ -1,7 +1,11 @@
 import json
 import sqlite3
+import sys
 
 DB_NAME = './scrapy-data/manga.db'
+WEB_URL = "https://hentai18.net"
+PARAM_URL = "/read-hentai/"
+file_path = sys.argv[1]
 
 
 def generate_dataseed_from_manga_table():
@@ -17,13 +21,14 @@ def generate_dataseed_from_manga_table():
         mangaLink, title, author, imageLink, description, categories, chapterLinks, createdAt = row
 
         manga = {
-            "mangaId": mangaLink,
+            "mangaId": mangaLink.replace(WEB_URL, '').replace(PARAM_URL, ''),
+            "mangaLink": WEB_URL + PARAM_URL,
             "title": title,
             "author": author,
             "description": description,
             "categories": [category.strip() for category in categories.split(",")],
             "imageLink": imageLink,
-            "chapterLinks": chapterLinks.split(","),
+            "chapterLinks": [chapterLink.replace(WEB_URL, '').replace(PARAM_URL, '') for chapterLink in chapterLinks.split(",")],
             "createdAt": createdAt
         }
 
@@ -38,5 +43,5 @@ def generate_dataseed_from_manga_table():
 data_seed = generate_dataseed_from_manga_table()
 
 # Save the data seed to a JSON file
-with open('./scrapy-data/manga.seed.json', 'w') as file:
+with open(file_path, 'w') as file:
     json.dump(data_seed, file, indent=2)

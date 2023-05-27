@@ -4,7 +4,7 @@ import { Chapter } from '@shared/types/Chapter';
 
 const dynamoDb = getDynamodbConnection();
 
-export const mangatService = new ServiceObject<Chapter>({
+export const chapterService = new ServiceObject<Chapter>({
   dynamoDb: dynamoDb,
   objectName: 'Chapter',
   table: `${process.env.CHAPTER_TABLE}`,
