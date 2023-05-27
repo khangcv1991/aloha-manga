@@ -7,3 +7,9 @@ export interface Manga {
   categories: string[];
   imageLink: string;
 }
+
+export interface MangaFilter {
+  searchName?: string;
+  categories?: string[];
+  authors?: string[];
+}

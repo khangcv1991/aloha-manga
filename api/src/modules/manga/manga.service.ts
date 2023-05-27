@@ -10,3 +10,8 @@ export const mangatService = new ServiceObject<Manga>({
   table: `${process.env.MANGA_TABLE}`,
   primaryKey: 'mangaLink',
 });
+
+export function containsWords(inputString: string, words: string[]) {
+  const pattern = new RegExp(`\\b(${words.join('|')})\\b`, 'i');
+  return pattern.test(inputString);
+}

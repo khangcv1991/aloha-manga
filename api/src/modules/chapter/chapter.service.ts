@@ -8,5 +8,5 @@ export const chapterService = new ServiceObject<Chapter>({
   dynamoDb: dynamoDb,
   objectName: 'Chapter',
   table: `${process.env.CHAPTER_TABLE}`,
-  primaryKey: 'chapterLink',
+  primaryKey: 'chapterId',
 });

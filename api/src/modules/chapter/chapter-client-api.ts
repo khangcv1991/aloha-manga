@@ -8,11 +8,11 @@ import { chapterService } from './chapter.service';
 AWS.config.update({ region: process.env.API_REGION });
 const app = createApp();
 
-app.get('/client/chapter/:chapterLink', [
+app.get('/client/chapter/:chapterId', [
   async (req: RequestContext, res: Response) => {
     try {
       console.log(req.params.chapterLink);
-      const chapter = await chapterService.get(req.params.chapterLink);
+      const chapter = await chapterService.get(req.params.chapterId);
       res.json(chapter);
     } catch (error) {
       console.error(`Failed to get chapter: ${error}`);

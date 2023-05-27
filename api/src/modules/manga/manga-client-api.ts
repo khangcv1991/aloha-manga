@@ -3,7 +3,10 @@ import * as AWS from 'aws-sdk';
 import createApp from '../../util/express-ap';
 import createAuthenticatedHandler from '../../util/create-authenticated-handler';
 import { RequestContext } from '../../util/request-context.type';
-import { mangatService } from './manga.service';
+import { containsWords, mangatService } from './manga.service';
+import { convertFilterStringToObject } from './manga.util';
+import { Manga } from '@shared/types/Manga';
+import { keyBy } from 'lodash-es';
 
 AWS.config.update({ region: process.env.API_REGION });
 const app = createApp();
@@ -37,42 +40,57 @@ app.get('/client/manga/:mangaId', [
   },
 ]);
 
-// app.get('/client/manga/slug/:slug', [
-//   isClient,
-//   async (req: RequestContext, res: Response) => {
-//     try {
-//       res.json(postMapper({}));
-//     } catch (error) {
-//       console.error(`Failed to get post by slug: ${error}`);
-//       res.status(400).json({
-//         error: 'Failed to get post by slug',
-//       });
-//     }
-//   },
-// ]);
+app.get('/client/manga/filter/:filter', [
+  async (req: RequestContext, res: Response) => {
+    try {
+      console.log(`get mangas by category ${req.params.filter}`);
+      const filter = convertFilterStringToObject(req.params.filter);
+      if (!filter) {
+        res.json([]);
+      }
+      console.log(`Filter: ${JSON.stringify(filter)}`);
 
-// app.get('/client/manga/:postId/tags', [
-//   isClient,
-//   async (req: RequestContext, res: Response) => {
-//     try {
-//       const post = await postService.get(req.params.postId);
-//       if (post) {
-//         const links = await getLinksByPrimary(`POST|${post.postId}`);
-//         const tagIds = links.map((link) => link.objectSecondary.split('|')[1]);
-//         const tags = await tagService.batchGet(tagIds);
-//         const formattedTags = tags.map(tagMapper);
-//         res.json(formattedTags);
-//       } else {
-//         res.status(404).json({ error: 'Post not found' });
-//       }
-//     } catch (error) {
-//       const message = getErrorMessage(error);
-//       console.error(`Failed to get tags: ${message}`);
-//       res.status(400).json({
-//         error: 'Failed to get tags',
-//       });
-//     }
-//   },
-// ]);
+      const mangas = await mangatService.getAll();
+      const mangaByMangaId = keyBy(mangas, 'mangaId');
+      const mangaIdsByCategory: Record<string, string[]> = mangas.reduce(
+        (currAcc, currVal: Manga) => {
+          let tmpAcc = { ...currAcc };
+          for (let category of currVal.categories) {
+            const tmpList = tmpAcc[category] || [];
+            tmpList.push(currVal.mangaId);
+            tmpAcc[category] = tmpList;
+          }
+          return tmpAcc;
+        },
+        {},
+      );
+
+      let filtedMangas: Manga[] = [];
+      if (filter?.searchName) {
+        filtedMangas = mangas?.filter((manga) =>
+          containsWords(manga.title, (filter?.searchName || '').split(' ')),
+        );
+      } else if (filter?.categories && filter.categories.length > 0) {
+        const mangaIdList = [];
+
+        for (let category of filter.categories) {
+          mangaIdList.push(mangaIdsByCategory?.[category]);
+        }
+
+        const mangaSet = new Set<string>(mangaIdList.flat());
+        filtedMangas = Array.from(mangaSet).map(
+          (id: string) => mangaByMangaId[id],
+        );
+      }
+      console.log(`found mangas: ${filtedMangas.length}`);
+      res.json(filtedMangas || []);
+    } catch (error) {
+      console.error(`Failed to get manga: ${error}`);
+      res.status(400).json({
+        error: `Fail to get manga ${error}`,
+      });
+    }
+  },
+]);
 
 export const handler = createAuthenticatedHandler(app);
