@@ -43,7 +43,6 @@ const Page = (props: Props): JSX.Element => {
         />
       </div>
       <script async src="https://kit.fontawesome.com/c6e566ba48.js" />
-      <Navbar />
       {children}
       <Footer />
     </div>

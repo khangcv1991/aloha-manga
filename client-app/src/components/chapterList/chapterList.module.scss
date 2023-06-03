@@ -9,6 +9,9 @@
     justify-items: center;
     align-items: center;
     width: fit-content;
+    max-width: 500px;
+    height: 50vh;
+    overflow: auto;
     .chapterItemContainer{
         display: flex;
         flex-direction: column;

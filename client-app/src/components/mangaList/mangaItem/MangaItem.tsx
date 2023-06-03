@@ -3,11 +3,11 @@ import styles from './manga.module.scss';
 import clockIconImage from './clock_icon.png';
 import { Manga } from '@shared/types/Manga';
 import { useNavigate } from 'react-router-dom';
-import { pageContext } from '../../../utils/PageContext';
+import { PageContext } from '../../../utils/PageContext';
 
 const MangaItem = (props: { manga: Manga }) => {
   const { manga } = props;
-  const { setReadingManga } = useContext(pageContext);
+  const { setReadingManga } = useContext(PageContext);
   const navigate = useNavigate();
 
   return (
@@ -24,7 +24,7 @@ const MangaItem = (props: { manga: Manga }) => {
         style={{
           backgroundImage: `url(${manga.imageLink})`,
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundPosition: 'top',
           backgroundRepeat: 'no-repeat',
         }}
       >

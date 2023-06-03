@@ -1,4 +1,4 @@
-import { Manga } from '@shared/types/Manga';
+import { Manga, MangaFilter } from '@shared/types/Manga';
 import React, {
   Dispatch,
   SetStateAction,
@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import { apiRequest } from './api-request';
 import { keyBy } from 'lodash';
+import { getLocalStorageItem, setLocalStorageItem } from './localstorage.util';
 
 interface PageContextProps {
   isDarkMode: boolean;
@@ -22,9 +23,13 @@ interface PageContextProps {
   readingChapter: string;
   setReadingManga: Dispatch<SetStateAction<string>>;
   setReadingChapter: Dispatch<SetStateAction<string>>;
+  mangaFilter: MangaFilter;
+  setMangaFilter: Dispatch<SetStateAction<MangaFilter>>;
+  filteringMangas: Manga[];
+  isMangaListLoading: boolean;
 }
 
-export const pageContext = createContext<PageContextProps>({
+export const PageContext = createContext<PageContextProps>({
   isDarkMode: false,
   setIsDarkMode: undefined,
   mangas: [],
@@ -36,16 +41,31 @@ export const pageContext = createContext<PageContextProps>({
   readingChapter: undefined,
   setReadingChapter: undefined,
   setReadingManga: undefined,
+  mangaFilter: undefined,
+  setMangaFilter: undefined,
+  filteringMangas: undefined,
+  isMangaListLoading: true,
 });
 
 export const PageProvider = (props: {
   children?: React.ReactNode;
 }): JSX.Element => {
   const { children } = props;
-  const [isDarkMode, setIsDarkMode] = useState<boolean>();
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(
+    getLocalStorageItem('isDarkMode'),
+  );
   const [mangas, setMangas] = useState<Manga[]>([]);
-  const [readingManga, setReadingManga] = useState<string>();
-  const [readingChapter, setReadingChapter] = useState<string>();
+  const [readingManga, setReadingManga] = useState<string>(
+    getLocalStorageItem('readingManga'),
+  );
+  const [readingChapter, setReadingChapter] = useState<string>(
+    getLocalStorageItem('readingChapter'),
+  );
+  const [mangaFilter, setMangaFilter] = useState<MangaFilter>({
+    categories: [],
+    searchName: undefined,
+  });
+  const [isMangaListLoading, setIsMangaListLoading] = useState(true);
 
   const mangaByMangaId = useMemo(() => keyBy(mangas, 'mangaId'), [mangas]);
   const mangaIdsByCategory = useMemo(
@@ -67,9 +87,42 @@ export const PageProvider = (props: {
     [mangaIdsByCategory],
   );
 
+  const filteringMangas = useMemo(() => {
+    console.log(mangaFilter);
+    if (mangaFilter && mangaFilter.searchName?.trim().length > 0) {
+      return mangas.filter((manga) => {
+        if (!manga.title) {
+          return false;
+        }
+        return manga.title
+          ?.toLowerCase()
+          ?.includes(mangaFilter.searchName?.toLocaleLowerCase());
+        // const itemWords = manga.title.split(' ');
+        // console.log(manga.title);
+        // const wordList = mangaFilter.searchName.split(' ');
+        // return !!itemWords?.some((word) => wordList.includes(word));
+      });
+    }
+
+    if (
+      mangaFilter &&
+      mangaFilter.categories.length > 0 &&
+      mangaFilter.categories[0] !== '' &&
+      mangaFilter.categories[0] !== 'all'
+    ) {
+      return mangaIdsByCategory?.[mangaFilter.categories[0]]?.map(
+        (id: string) => mangaByMangaId?.[id],
+      );
+    }
+
+    return mangas;
+  }, [mangaFilter, mangas]);
+
   useEffect(() => {
     void (async () => {
       try {
+        setIsMangaListLoading(true);
+
         const mangaResponse = await apiRequest<Manga[]>({
           method: 'GET',
           url: '/client/manga/list',
@@ -78,11 +131,20 @@ export const PageProvider = (props: {
         if ('data' in mangaResponse) {
           setMangas(mangaResponse.data || []);
         }
+        setIsMangaListLoading(false);
       } catch (err) {
         console.log(err);
       }
     })();
   }, []);
+
+  useEffect(() => {
+    setLocalStorageItem('readingManga', readingManga);
+  }, [readingManga]);
+
+  useEffect(() => {
+    setLocalStorageItem('readingChapter', readingChapter);
+  }, [readingChapter]);
 
   const pageProviderValues = {
     isDarkMode,
@@ -96,11 +158,28 @@ export const PageProvider = (props: {
     readingManga,
     setReadingChapter,
     setReadingManga,
+    mangaFilter,
+    setMangaFilter,
+    filteringMangas,
+    isMangaListLoading,
   };
 
   return (
-    <pageContext.Provider value={pageProviderValues}>
+    <PageContext.Provider value={pageProviderValues}>
       {children}
-    </pageContext.Provider>
+    </PageContext.Provider>
   );
 };
+
+export function containsWords(string: string, words: string[]) {
+  if (!words) {
+    return true;
+  }
+
+  if (words.length == 1) {
+    return string?.includes(words[0]);
+  }
+
+  const pattern = new RegExp(`\\b(${words.join('|')})\\b`, 'i');
+  return pattern.test(string);
+}

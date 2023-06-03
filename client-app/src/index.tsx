@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
+import Home from './pages/Home/Home';
 import Error from './pages/Error';
 import { PageProvider } from './utils/PageContext';
-import { MangaPage } from './pages/Manga';
-import { ChapterPage } from './pages/Chapter';
+import { MangaPage } from './pages/Manga/Manga';
+import { ChapterPage } from './pages/Chapter/Chapter';
 
 ReactDOM.render(
   <React.StrictMode>

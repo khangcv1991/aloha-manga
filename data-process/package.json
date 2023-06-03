@@ -7,7 +7,9 @@
     "scrapy:links": "scrapy runspider ./scripts/python-scripts/fetchMangaLinks.py",
     "scrapy:manga:detail": "scrapy runspider ./scripts/python-scripts/fetchMangaDetail.py",
     "seed:manga": "python3 ./scripts/python-scripts/generateMangaSeed.py ../api/src/modules/manga/manga.seed.json",
-    "seed:chapter": "python3 ./scripts/python-scripts/generateChapterSeed.py ../api/src/modules/chapter/chapter.seed.json"
+    "seed:chapter": "python3 ./scripts/python-scripts/generateChapterSeed.py ../api/src/modules/chapter/chapter.seed.json",
+    "dynamodb:chapter": "python3 ./scripts/python-scripts/generateChapterDynamoData.py ../api/src/modules/chapter/chapter.db.csv",
+    "dynamodb:manga": "python3 ./scripts/python-scripts/generateMangaDynamoData.py ../api/src/modules/manga/manga.db.csv"
   },
   "author": "",
   "license": "ISC"

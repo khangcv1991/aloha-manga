@@ -1,0 +1,35 @@
+@use '../../styles/colors';
+@use '../../styles/layout';
+@import "../../styles/globals";
+
+.mangaContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .mangaImgContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        h1 {
+            display: flex;
+
+        }
+        img {
+            display: flex;
+            height: 170px;
+            width: 330px;
+            border-radius: 20px;
+            object-fit: cover;
+            object-position: top;
+            background-repeat: no-repeat;
+        }
+    }
+
+    .bodyContainer{
+        display: flex;
+        flex-direction: column;
+        max-width: 350px;
+    }
+}

@@ -5,15 +5,16 @@ import { Manga } from '@shared/types/Manga';
 
 interface MangaListProps {
   mangas: Manga[];
+  className?: string;
 }
 
 const MangaList = (props: MangaListProps) => {
-  const { mangas } = props;
+  const { mangas, className } = props;
 
   return (
     <>
-      <div className={styles.mangaListContainer}>
-        {mangas.map((manga) => (
+      <div className={`${styles.mangaListContainer} ${className}`}>
+        {mangas?.map((manga) => (
           <MangaItem key={manga.mangaId} manga={manga} />
         ))}
       </div>

@@ -1,0 +1,37 @@
+@use '../../../styles/colors';
+@use '../../../styles/layout';
+@import "../../../styles/globals";
+
+.chapterNavContainer {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    bottom: 20px;
+
+    .btnGroupContainer {
+        display: flex;
+        flex-direction: row;
+
+        button {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nextBtn {
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        .prevBtn {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chapterSelect {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+}

@@ -69,3 +69,9 @@ tsconfig.tsbuildinfo
 /data-process/scripts/manga.db
 data-process/scripts/python-scripts/__pycache__/fetchMangaDetail.cpython-310.pyc
 data-process/scripts/python-scripts/__pycache__/fetchMangaLinks.cpython-310.pyc
+api/src/modules/chapter/chapter.db.csv
+api/src/modules/chapter/chapter.db.json
+api/src/modules/manga/manga.db.csv
+api/src/modules/manga/manga.db.json
+api/src/modules/manga/manga.seed.json
+client-app/.env

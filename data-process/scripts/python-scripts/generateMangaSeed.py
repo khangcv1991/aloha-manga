@@ -26,7 +26,7 @@ def generate_dataseed_from_manga_table():
             "title": title,
             "author": author,
             "description": description,
-            "categories": [category.strip() for category in categories.split(",")],
+            "categories": [category.strip() for category in categories.split(",") if category.strip()],
             "imageLink": imageLink,
             "chapterLinks": [chapterLink.replace(WEB_URL, '').replace(PARAM_URL, '') for chapterLink in chapterLinks.split(",")],
             "createdAt": createdAt

@@ -8,11 +8,13 @@
     background-color: hsl(240, 5%, 96%);
     width: fit-content;
     border-radius: 40px;
+    height: 50px;
     ul {
         display: block;
         flex-direction: row;
         margin: unset;
         padding: unset;
+        position: relative;
         li {
             display: block;
             float: left;

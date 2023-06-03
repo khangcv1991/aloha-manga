@@ -1,0 +1,14 @@
+@use '../../styles/colors';
+@use '../../styles/layout';
+@import "../../styles/globals";
+
+.mangaList {
+    display: flex;
+    position: sticky;
+    top: 20vh;
+    max-height: calc(80vh - 50px);
+    overflow: auto;
+    &::-webkit-scrollbar {
+        width: 0;
+      }
+}

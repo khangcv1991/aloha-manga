@@ -2,9 +2,13 @@
 @use '../../styles/layout';
 
 .footer {
-  padding: 64px 32px 32px;
+  padding: 10px 32px 10px;
   color: colors.$white;
-  background-color: colors.$greyDark;
+  background-color: #fd606d;
+  position: sticky;
+  width: 100%;
+  top: calc(100vh - 50px);
+  height: 50px;
 
   .footerWrapper {
     display: flex;

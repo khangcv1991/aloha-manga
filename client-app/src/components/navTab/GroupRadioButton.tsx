@@ -1,7 +1,7 @@
 import React, { SetStateAction, useEffect, useState } from 'react';
 import styles from './groupRadioButton.module.scss';
 
-interface RadioButton {
+export interface RadioButton {
   id: string;
   title: string;
 }
@@ -46,11 +46,7 @@ const GroupRadioButton = (props: GroupRadioButtonProps): JSX.Element => {
           <li
             className={styles.optionSlider}
             style={{
-              left: `${
-                selectedIndex * DEFAULT_WIDTH +
-                CONTAINER_MARGIN +
-                CONTAINER_PADDING
-              }px`,
+              left: `${selectedIndex * DEFAULT_WIDTH}px`,
               width: DEFAULT_WIDTH,
             }}
           ></li>
