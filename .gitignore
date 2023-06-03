@@ -75,3 +75,5 @@ api/src/modules/manga/manga.db.csv
 api/src/modules/manga/manga.db.json
 api/src/modules/manga/manga.seed.json
 client-app/.env
+api/src/modules/manga/manga.seed.json
+api/src/modules/manga/manga.seed.json
