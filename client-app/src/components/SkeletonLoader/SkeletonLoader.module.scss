@@ -1,0 +1,21 @@
+@use '../../styles/colors';
+@use '../../styles/layout';
+@import "../../styles/globals";
+
+.loading {
+  width: 100%;
+  height: 20px;
+
+  background: linear-gradient(90deg, #f5f6f7 30%, #eee 50%, #f5f6f7 70%);
+  background-size: 300% 100%;
+  animation: loading 2.5s ease 0.5s infinite;
+}
+
+@keyframes loading {
+  from {
+    background-position: 100%;
+  }
+  to {
+    background-position: 0%;
+  }
+}

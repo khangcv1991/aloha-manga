@@ -45,6 +45,23 @@
       color: colors.$white;
       background-color: #fd606d;
     }
+
+    .itemLoader {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2px;
+      padding-left: 20px;
+      padding-right: 20px;
+      font-size: 13px !important;
+      margin-right: 10px;
+      margin-bottom: 0px;
+      border-radius: 30px;
+      min-width: 100px;
+      width: max-content;
+      height: 30px;
+    }
   
   }
   

@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import styles from './category.module.scss';
 import { PageContext } from '../../../utils/PageContext';
+import SkeletonLoader from '../../SkeletonLoader/SkeletonLoader';
 
 interface CategoryFilterProps {
   categories: string[];
@@ -19,7 +20,8 @@ const CategoryFilter = (props: CategoryFilterProps) => {
   const [selectedCategories, setSelectedCategories] = useState<Set<string>>(
     new Set<string>(['all']),
   );
-  const { mangaFilter, setMangaFilter } = useContext(PageContext);
+  const { mangaFilter, setMangaFilter, isMangaListLoading } =
+    useContext(PageContext);
   const [leftPostion, setLeftPosition] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -126,30 +128,40 @@ const CategoryFilter = (props: CategoryFilterProps) => {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <li
-            key="all"
-            onClick={(): void => {
-              onItemClick('all');
-            }}
-            className={
-              selectedCategories?.has('all') ? styles.selectedItem : null
-            }
-          >
-            All
-          </li>
-          {categories?.map((category) => (
-            <li
-              key={category}
-              onClick={(): void => {
-                onItemClick(category);
-              }}
-              className={
-                selectedCategories?.has(category) ? styles.selectedItem : null
-              }
-            >
-              {category}
-            </li>
-          ))}
+          {isMangaListLoading ? (
+            Array(10)
+              .fill({})
+              .map((item) => <SkeletonLoader className={styles.itemLoader} />)
+          ) : (
+            <>
+              <li
+                key="all"
+                onClick={(): void => {
+                  onItemClick('all');
+                }}
+                className={
+                  selectedCategories?.has('all') ? styles.selectedItem : null
+                }
+              >
+                All
+              </li>
+              {categories?.map((category) => (
+                <li
+                  key={category}
+                  onClick={(): void => {
+                    onItemClick(category);
+                  }}
+                  className={
+                    selectedCategories?.has(category)
+                      ? styles.selectedItem
+                      : null
+                  }
+                >
+                  {category}
+                </li>
+              ))}
+            </>
+          )}
         </ul>
 
         {/* <div className={styles.rightArrow}> {'>'} </div> */}
