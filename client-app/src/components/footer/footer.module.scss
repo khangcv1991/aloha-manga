@@ -2,12 +2,12 @@
 @use '../../styles/layout';
 
 .footer {
+  display: flex;
+  flex-direction: row;
   padding: 10px 32px 10px;
   color: colors.$white;
   background-color: #fd606d;
-  position: sticky;
   width: 100%;
-  top: calc(100vh - 50px);
   height: 50px;
 
   .footerWrapper {
@@ -18,14 +18,17 @@
   }
 
   .content {
-    flex: 0 0 50%;
-
+    
+    span {
+      width: 200px;
+    }
     @media screen and (max-width: layout.$md) {
       flex: 1 1 100%;
     }
   }
 
   .logo {
+    width: 100%;
     img {
       width: 140px;
       height: 35px;

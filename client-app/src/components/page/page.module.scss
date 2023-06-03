@@ -3,7 +3,41 @@
 @import "../../styles/globals";
 
 .page {
+  display: flex;
+  flex-direction: column;
   height: 100vh;
+  padding-top: 20px;
+
+  .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: calc(100vh - 70px);
+
+    .leftContainer {
+      display: flex;
+      flex-direction: column;
+      max-width: 75px;
+      height: 100%;
+
+      @media screen and (max-width: layout.$xs) {
+        display: none !important;
+      }
+
+    }
+
+    .rightContainer {
+      display: flex;
+      flex-direction: column;
+      width: calc(100% - 75px);
+      height: 100%;
+      @media screen and (max-width: layout.$xs) {
+        width: 100%
+      }
+    }
+
+  }
+
   .callToAction {
     display: flex;
     flex-direction: column;

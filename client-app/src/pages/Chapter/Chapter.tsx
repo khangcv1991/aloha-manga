@@ -6,6 +6,7 @@ import { ChapterDetail } from '../../components/chapterDetail/ChapterDetail';
 import styles from './chapter.module.scss';
 import { ChapterNav } from './ChapterNav/ChapterNav';
 import { PageContext } from '../../utils/PageContext';
+import Page from '../../components/page/Page';
 
 export const ChapterPage = (): JSX.Element => {
   const { chapterId } = useParams();
@@ -39,10 +40,12 @@ export const ChapterPage = (): JSX.Element => {
 
   return (
     <>
-      <div className={styles.chapterContainer}>
-        <ChapterDetail imgLinks={images} />
-        <ChapterNav />
-      </div>
+      <Page title="Chapter">
+        <div className={styles.chapterContainer}>
+          <ChapterDetail imgLinks={images} />
+          <ChapterNav />
+        </div>
+      </Page>
     </>
   );
 };

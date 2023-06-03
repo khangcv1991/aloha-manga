@@ -1,0 +1,57 @@
+@use '../../styles/colors';
+@use '../../styles/layout';
+@import "../../styles/globals";
+
+.sideBarContainder {
+    display: flex;
+    flex-direction: column;
+   
+    .itemListContainer {
+        display: flex;
+        flex-direction: column;
+        margin-top: 25px;
+        position: relative;
+        
+        .sideBarItemContainer {
+            display: flex;
+            flex-direction: column;
+            width: 64px;
+            height: 74px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1;
+            
+            .item {
+                color: #fd606d;
+            }
+        }
+
+        .selSideBarItemContainer  {
+            display: flex;
+            flex-direction: column;
+            width: 64px;
+            height: 74px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1;
+
+            .item {
+                color: #fcfcfc;
+                transition: all .8s ease;
+            }
+        } 
+
+        .floatItem {
+            width: 64px;
+            height: 74px;
+            position:absolute;
+            background-color:#fd606d;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+            z-index: 0;
+            transition: all .4s ease;
+        }
+    }
+}
