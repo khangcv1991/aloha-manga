@@ -16,9 +16,10 @@ import { useNavigate } from 'react-router-dom';
 
 interface SideBarProps {
   className?: string;
+  isVertical?: boolean;
 }
 
-enum SLIDE_BAR {
+enum SIDE_BAR {
   HOME = 'home',
   FAVORIT = 'favorit',
   HISTORY = 'history',
@@ -30,52 +31,59 @@ enum SLIDE_BAR {
 const ITEM_HEIGHT = 74;
 
 export const SideBar = (props: SideBarProps) => {
-  const { className } = props;
-  const [selItem, setSelItem] = useState(SLIDE_BAR.HOME);
-  const [topPosition, setTopPosition] = useState(0);
+  const { className, isVertical = true } = props;
+  const [selItem, setSelItem] = useState(SIDE_BAR.HOME);
+  const [position, setPosition] = useState(0);
   const navigation = useNavigate();
 
   return (
     <>
-      <div className={`${styles.sideBarContainder} ${className}`}>
-        <FontAwesomeIcon icon={faBars} size="xl" />
-        <div className={styles.itemListContainer}>
+      <div
+        className={
+          isVertical
+            ? `${styles.sideBarVerticalContainder} ${className}`
+            : `${styles.sideBarHorizontalContainder} ${className}`
+        }
+      >
+        {isVertical && <FontAwesomeIcon icon={faBars} size="xl" />}
+        <div className={`${styles.itemListContainer} ${styles.hidden}`}>
           <div
             className={
-              selItem === SLIDE_BAR.HOME
+              selItem === SIDE_BAR.HOME
                 ? styles.selSideBarItemContainer
                 : styles.sideBarItemContainer
             }
             onClick={() => {
-              setSelItem(SLIDE_BAR.HOME);
-              setTopPosition(0);
+              setSelItem(SIDE_BAR.HOME);
+              setPosition(0);
               navigation('/');
             }}
           >
             <FontAwesomeIcon icon={faHome} className={styles.item} size="xl" />
           </div>
+
           <div
             className={
-              selItem === SLIDE_BAR.FAVORIT
+              selItem === SIDE_BAR.FAVORIT
                 ? styles.selSideBarItemContainer
                 : styles.sideBarItemContainer
             }
             onClick={() => {
-              setSelItem(SLIDE_BAR.FAVORIT);
-              setTopPosition(1 * ITEM_HEIGHT);
+              setSelItem(SIDE_BAR.FAVORIT);
+              setPosition(1 * ITEM_HEIGHT);
             }}
           >
             <FontAwesomeIcon icon={faStar} className={styles.item} size="xl" />
           </div>
           <div
             className={
-              selItem === SLIDE_BAR.HISTORY
+              selItem === SIDE_BAR.HISTORY
                 ? styles.selSideBarItemContainer
                 : styles.sideBarItemContainer
             }
             onClick={() => {
-              setSelItem(SLIDE_BAR.HISTORY);
-              setTopPosition(2 * ITEM_HEIGHT);
+              setSelItem(SIDE_BAR.HISTORY);
+              setPosition(2 * ITEM_HEIGHT);
             }}
           >
             <FontAwesomeIcon
@@ -86,26 +94,26 @@ export const SideBar = (props: SideBarProps) => {
           </div>
           <div
             className={
-              selItem === SLIDE_BAR.NOTIFICATION
+              selItem === SIDE_BAR.NOTIFICATION
                 ? styles.selSideBarItemContainer
                 : styles.sideBarItemContainer
             }
             onClick={() => {
-              setSelItem(SLIDE_BAR.NOTIFICATION);
-              setTopPosition(3 * ITEM_HEIGHT);
+              setSelItem(SIDE_BAR.NOTIFICATION);
+              setPosition(3 * ITEM_HEIGHT);
             }}
           >
             <FontAwesomeIcon icon={faBell} className={styles.item} size="xl" />
           </div>
           <div
             className={
-              selItem === SLIDE_BAR.SING_GIN
+              selItem === SIDE_BAR.SING_GIN
                 ? styles.selSideBarItemContainer
                 : styles.sideBarItemContainer
             }
             onClick={() => {
-              setSelItem(SLIDE_BAR.SING_GIN);
-              setTopPosition(4 * ITEM_HEIGHT);
+              setSelItem(SIDE_BAR.SING_GIN);
+              setPosition(4 * ITEM_HEIGHT);
             }}
           >
             <FontAwesomeIcon
@@ -121,7 +129,7 @@ export const SideBar = (props: SideBarProps) => {
               size="xl"
             />
           </div> */}
-          <div className={styles.floatItem} style={{ top: topPosition }}></div>
+          <div className={styles.floatItem} style={{ top: position }}></div>
         </div>
       </div>
     </>

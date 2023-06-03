@@ -2,16 +2,16 @@
 @use '../../styles/layout';
 @import "../../styles/globals";
 
-.sideBarContainder {
+.sideBarVerticalContainder {
     display: flex;
     flex-direction: column;
-   
+
     .itemListContainer {
         display: flex;
         flex-direction: column;
         margin-top: 25px;
         position: relative;
-        
+
         .sideBarItemContainer {
             display: flex;
             flex-direction: column;
@@ -21,13 +21,13 @@
             justify-content: center;
             cursor: pointer;
             z-index: 1;
-            
+
             .item {
                 color: #fd606d;
             }
         }
 
-        .selSideBarItemContainer  {
+        .selSideBarItemContainer {
             display: flex;
             flex-direction: column;
             width: 64px;
@@ -41,17 +41,70 @@
                 color: #fcfcfc;
                 transition: all .8s ease;
             }
-        } 
+        }
 
         .floatItem {
             width: 64px;
             height: 74px;
-            position:absolute;
-            background-color:#fd606d;
+            position: absolute;
+            background-color: #fd606d;
             border-top-right-radius: 20px;
             border-bottom-right-radius: 20px;
             z-index: 0;
             transition: all .4s ease;
         }
     }
+}
+
+.sideBarHorizontalContainder {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    .itemListContainer {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
+        position: relative;
+        justify-content: space-between;
+
+        .sideBarItemContainer {
+            display: flex;
+            flex-direction: column;
+            width: 64px;
+            height: 50px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1;
+
+            .item {
+
+                color: #9c9c9c;
+            }
+        }
+
+        .selSideBarItemContainer {
+            display: flex;
+            flex-direction: column;
+            width: 64px;
+            height: 50px;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1;
+
+            .item {
+                color: #fd606d;
+                transition: all .8s ease;
+            }
+        }
+
+        .floatItem {
+            display: none;
+        }
+    }
+
 }
