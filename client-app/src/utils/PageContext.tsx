@@ -229,6 +229,7 @@ export const PageProvider = (props: {
   }, [mangaFavorit]);
 
   useEffect(() => {
+    setMangaFilter({ categories: [], searchName: undefined });
     setLocalStorageItem('pageStage', pageStage);
   }, [pageStage]);
 
