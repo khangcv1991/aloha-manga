@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './footer.module.scss';
 import { SideBar } from '../SideBar/SideBar';
+import { PAGE_STAGE, PageContext } from '../../utils/PageContext';
+import { ChapterNav } from '../../pages/Chapter/ChapterNav/ChapterNav';
 const WINDOW_WIDTH_XS = 576;
 
 const Footer = (): JSX.Element => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const { pageStage } = useContext(PageContext);
 
   useEffect(() => {
     // Function to update window width
@@ -25,13 +28,19 @@ const Footer = (): JSX.Element => {
   return (
     <>
       <div className={styles.footerSideBarContainer}>
-        <SideBar isVertical={false} />
+        {pageStage !== PAGE_STAGE.CHAPTER_DETAIL && (
+          <SideBar isVertical={false} />
+        )}
       </div>
-      <div className={styles.footer}>
-        <div className={styles.footerWrapper}>
-          <div className={styles.content}>©2023 Aloha Manga</div>
+      {pageStage === PAGE_STAGE.CHAPTER_DETAIL ? (
+        <ChapterNav />
+      ) : (
+        <div className={styles.footer}>
+          <div className={styles.footerWrapper}>
+            <div className={styles.content}>©2023 Aloha Manga</div>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

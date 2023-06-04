@@ -5,13 +5,17 @@
 .chapterNavContainer {
     display: flex;
     flex-direction: column;
-    position: sticky;
-    bottom: 20px;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 
     .btnGroupContainer {
         display: flex;
         flex-direction: row;
-
+        width: 70%;
+        max-width: 500px;
+        justify-content: space-between;
+    
         button {
             display: flex;
             flex-direction: column;
@@ -31,6 +35,14 @@
         .chapterSelect {
             display: flex;
             flex-direction: column;
+            width: 200px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .item {
+            color:#fd606d ;
+            cursor: pointer;
         }
     }
 
