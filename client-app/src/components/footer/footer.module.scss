@@ -2,13 +2,17 @@
 @use '../../styles/layout';
 
 .footer {
+  display: flex;
+  flex-direction: row;
   padding: 10px 32px 10px;
   color: colors.$white;
   background-color: #fd606d;
-  position: sticky;
   width: 100%;
-  top: calc(100vh - 50px);
   height: 50px;
+
+  @media screen and (max-width: layout.$xs) {
+    display: none;
+  }
 
   .footerWrapper {
     display: flex;
@@ -18,19 +22,36 @@
   }
 
   .content {
-    flex: 0 0 50%;
-
+    
+    span {
+      width: 200px;
+    }
     @media screen and (max-width: layout.$md) {
       flex: 1 1 100%;
     }
   }
 
   .logo {
+    width: 100%;
     img {
       width: 140px;
       height: 35px;
       margin-bottom: 32px;
       object-fit: contain;
     }
+  }
+}
+
+.footerSideBarContainer {
+  display:flex;
+  position: fixed;
+  width: 100%;
+  background-color: #ffffff;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+
+  @media screen and (min-width: layout.$xs) {
+    display: none;
   }
 }

@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ChapterList } from '../../components/chapterList/ChapterList';
-import { PageContext } from '../../utils/PageContext';
+import { PAGE_STAGE, PageContext } from '../../utils/PageContext';
 import styles from './manga.module.scss';
 import GroupRadioButton from '../../components/navTab/GroupRadioButton';
 import Page from '../../components/page/Page';
@@ -12,8 +12,14 @@ const RadioButtons = [
 
 export const MangaPage = (): JSX.Element => {
   const { mangaId } = useParams();
-  const { mangaByMangaId } = useContext(PageContext);
+  const { setPageStage, mangaByMangaId, setReadingManga } =
+    useContext(PageContext);
   const [selectedButton, setSelectedButton] = useState(RadioButtons[0]);
+
+  useEffect(() => {
+    setReadingManga(mangaId);
+    setPageStage(PAGE_STAGE.MANGA_DETAIL);
+  }, []);
 
   return (
     <>

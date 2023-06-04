@@ -4,12 +4,13 @@ import { apiRequest } from '../../utils/api-request';
 import { Chapter } from '@shared/types/Chapter';
 import styles from './chapter.module.scss';
 import { ChapterNav } from './ChapterNav/ChapterNav';
-import { PageContext } from '../../utils/PageContext';
-import { ChapterDetail } from '../../components/ChapterDetail/ChapterDetail';
+import { PAGE_STAGE, PageContext } from '../../utils/PageContext';
+import Page from '../../components/page/Page';
+import { ChapterDetail } from './chapterDetail/ChapterDetail';
 
 export const ChapterPage = (): JSX.Element => {
   const { chapterId } = useParams();
-  const { setReadingChapter } = useContext(PageContext);
+  const { setReadingChapter, setPageStage } = useContext(PageContext);
   const [images, setImages] = useState<string[]>([]);
 
   useEffect(() => {
@@ -35,14 +36,18 @@ export const ChapterPage = (): JSX.Element => {
     if (chapterId && setReadingChapter) {
       setReadingChapter(chapterId);
     }
+
+    setPageStage(PAGE_STAGE.CHAPTER_DETAIL);
   }, [chapterId]);
 
   return (
     <>
-      <div className={styles.chapterContainer}>
-        <ChapterDetail imgLinks={images} />
-        <ChapterNav />
-      </div>
+      <Page title="Chapter">
+        <div className={styles.chapterContainer}>
+          <ChapterDetail imgLinks={images} />
+          <ChapterNav />
+        </div>
+      </Page>
     </>
   );
 };
