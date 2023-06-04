@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { apiRequest } from '../../utils/api-request';
 import { Chapter } from '@shared/types/Chapter';
-import { ChapterDetail } from '../../components/chapterDetail/ChapterDetail';
 import styles from './chapter.module.scss';
 import { ChapterNav } from './ChapterNav/ChapterNav';
 import { PageContext } from '../../utils/PageContext';
+import { ChapterDetail } from '../../components/ChapterDetail/ChapterDetail';
 
 export const ChapterPage = (): JSX.Element => {
   const { chapterId } = useParams();
