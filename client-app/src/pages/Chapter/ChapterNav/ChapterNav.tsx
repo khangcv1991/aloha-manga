@@ -2,6 +2,13 @@ import React, { useContext } from 'react';
 import { PageContext } from '../../../utils/PageContext';
 import styles from './chapterNav.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faArrowAltCircleLeft,
+  faArrowAltCircleRight,
+  faBook,
+  faBookOpenReader,
+} from '@fortawesome/free-solid-svg-icons';
 
 export const ChapterNav = (): JSX.Element => {
   const { readingManga, readingChapter, mangaByMangaId, setReadingChapter } =
@@ -11,15 +18,18 @@ export const ChapterNav = (): JSX.Element => {
   return (
     <div className={styles.chapterNavContainer}>
       <div className={styles.btnGroupContainer}>
-        <button
+        <FontAwesomeIcon
+          icon={faBookOpenReader}
+          className={styles.item}
+          size="2xl"
           onClick={() => {
-            navigate('/');
+            navigate(`/manga/${readingManga}`);
           }}
-        >
-          Home
-        </button>
-        <button
-          className={styles.prevBtn}
+        />
+        <FontAwesomeIcon
+          icon={faArrowAltCircleLeft}
+          className={styles.item}
+          size="2xl"
           onClick={() => {
             const index =
               mangaByMangaId?.[readingManga]?.chapterLinks?.indexOf(
@@ -35,9 +45,7 @@ export const ChapterNav = (): JSX.Element => {
               navigate(`/chapter/${chapterId}`);
             }
           }}
-        >
-          Previous
-        </button>
+        />
         <select
           className={styles.chapterSelect}
           onChange={(e) => {
@@ -54,8 +62,10 @@ export const ChapterNav = (): JSX.Element => {
             </option>
           ))}
         </select>
-        <button
-          className={styles.nextBtn}
+        <FontAwesomeIcon
+          icon={faArrowAltCircleRight}
+          className={styles.item}
+          size="2xl"
           onClick={() => {
             const index =
               mangaByMangaId?.[readingManga]?.chapterLinks?.indexOf(
@@ -68,9 +78,7 @@ export const ChapterNav = (): JSX.Element => {
               navigate(`/chapter/${chapterId}`);
             }
           }}
-        >
-          Next
-        </button>
+        />
       </div>
     </div>
   );

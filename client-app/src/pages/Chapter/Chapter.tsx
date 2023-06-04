@@ -45,7 +45,6 @@ export const ChapterPage = (): JSX.Element => {
       <Page title="Chapter">
         <div className={styles.chapterContainer}>
           <ChapterDetail imgLinks={images} />
-          <ChapterNav />
         </div>
       </Page>
     </>
