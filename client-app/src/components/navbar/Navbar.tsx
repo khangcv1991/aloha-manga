@@ -7,10 +7,14 @@ import { PageContext } from '../../utils/PageContext';
 
 const Navbar = (): JSX.Element => {
   const { categories } = useContext(PageContext);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
   return (
     <div className={styles.navbar}>
       <div className={styles.navContainer}>
-        <SearchBar />
+        <div className={styles.searchBarContainer}>
+          <SearchBar />
+        </div>
         <CategoryFilter categories={categories} isMutiSelect={false} />
       </div>
     </div>

@@ -2,15 +2,15 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { apiRequest } from '../../utils/api-request';
 import { Chapter } from '@shared/types/Chapter';
-import { ChapterDetail } from '../../components/chapterDetail/ChapterDetail';
 import styles from './chapter.module.scss';
 import { ChapterNav } from './ChapterNav/ChapterNav';
-import { PageContext } from '../../utils/PageContext';
+import { PAGE_STAGE, PageContext } from '../../utils/PageContext';
 import Page from '../../components/page/Page';
+import { ChapterDetail } from './chapterDetail/ChapterDetail';
 
 export const ChapterPage = (): JSX.Element => {
   const { chapterId } = useParams();
-  const { setReadingChapter } = useContext(PageContext);
+  const { setReadingChapter, setPageStage } = useContext(PageContext);
   const [images, setImages] = useState<string[]>([]);
 
   useEffect(() => {
@@ -36,6 +36,8 @@ export const ChapterPage = (): JSX.Element => {
     if (chapterId && setReadingChapter) {
       setReadingChapter(chapterId);
     }
+
+    setPageStage(PAGE_STAGE.CHAPTER_DETAIL);
   }, [chapterId]);
 
   return (

@@ -19,6 +19,11 @@
     justify-content: space-between;
     width: 100%;
     max-width: layout.$maxWidth;
+    .searchBarContainer {
+      @media screen and (max-width: layout.$xs) {
+        display: none;
+      }
+    }
     img {
       width: 30px;
       height: 30px;
