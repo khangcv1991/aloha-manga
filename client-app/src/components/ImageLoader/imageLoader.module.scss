@@ -6,6 +6,7 @@
     flex-direction: column;
     width: 100%;
     min-width: 500px;
+    align-items: center;
 
     @media screen and (max-width: layout.$xs) {
         min-width: 100%;

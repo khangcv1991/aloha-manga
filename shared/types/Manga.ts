@@ -14,3 +14,8 @@ export interface MangaFilter {
   categories?: string[];
   authors?: string[];
 }
+
+export interface MangaHistory {
+  mangaId: string;
+  createdAt: string;
+}

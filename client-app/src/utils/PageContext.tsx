@@ -1,4 +1,4 @@
-import { Manga, MangaFilter } from '@shared/types/Manga';
+import { Manga, MangaFilter, MangaHistory } from '@shared/types/Manga';
 import React, {
   Dispatch,
   SetStateAction,
@@ -10,6 +10,7 @@ import React, {
 import { apiRequest } from './api-request';
 import { keyBy } from 'lodash';
 import { getLocalStorageItem, setLocalStorageItem } from './localstorage.util';
+import FingerprintJS from 'fingerprintjs2';
 
 export enum PAGE_STAGE {
   HOME = 'home',
@@ -34,6 +35,12 @@ interface PageContextProps {
   isMangaListLoading: boolean;
   pageStage: string;
   setPageStage: Dispatch<SetStateAction<string>>;
+  mangaHistory: MangaHistory[];
+  setMangaHistory: Dispatch<SetStateAction<MangaHistory[]>>;
+  mangaFavorit: MangaHistory[];
+  setMangaFavorit: Dispatch<SetStateAction<MangaHistory[]>>;
+  // clientDevice: string;
+  // setClientDevice: Dispatch<SetStateAction<string>>;
 }
 
 export const PageContext = createContext<PageContextProps>({
@@ -54,6 +61,12 @@ export const PageContext = createContext<PageContextProps>({
   isMangaListLoading: true,
   pageStage: undefined,
   setPageStage: undefined,
+  mangaHistory: undefined,
+  setMangaHistory: undefined,
+  mangaFavorit: undefined,
+  setMangaFavorit: undefined,
+  // clientDevice: undefined,
+  // setClientDevice: undefined,
 });
 
 export const PageProvider = (props: {
@@ -76,6 +89,13 @@ export const PageProvider = (props: {
   });
   const [isMangaListLoading, setIsMangaListLoading] = useState(true);
   const [pageStage, setPageStage] = useState(PAGE_STAGE.HOME);
+  const [mangaHistory, setMangaHistory] = useState(
+    getLocalStorageItem<MangaHistory[]>('mangaHistory'),
+  );
+  const [mangaFavorit, setMangaFavorit] = useState(
+    getLocalStorageItem<MangaHistory[]>('mangaFavorit'),
+  );
+  // const [clientDevice, setClientDevice] = useState();
 
   const mangaByMangaId = useMemo(() => keyBy(mangas, 'mangaId'), [mangas]);
   const mangaIdsByCategory = useMemo(
@@ -107,10 +127,6 @@ export const PageProvider = (props: {
         return manga.title
           ?.toLowerCase()
           ?.includes(mangaFilter.searchName?.toLocaleLowerCase());
-        // const itemWords = manga.title.split(' ');
-        // console.log(manga.title);
-        // const wordList = mangaFilter.searchName.split(' ');
-        // return !!itemWords?.some((word) => wordList.includes(word));
       });
     }
 
@@ -156,6 +172,24 @@ export const PageProvider = (props: {
     setLocalStorageItem('readingChapter', readingChapter);
   }, [readingChapter]);
 
+  useEffect(() => {
+    if (pageStage === PAGE_STAGE.MANGA_DETAIL && readingManga) {
+      const mangaHistoryByMangaId = keyBy(mangaHistory, 'mangaId');
+      if (mangaHistoryByMangaId && !mangaHistoryByMangaId[readingManga]) {
+        setMangaHistory([
+          ...(mangaHistory || []),
+          { mangaId: readingManga, createdAt: new Date().toISOString() },
+        ]);
+      } else if (!mangaHistory) {
+        setMangaHistory([
+          { mangaId: readingManga, createdAt: new Date().toISOString() },
+        ]);
+      }
+
+      setLocalStorageItem('mangaHistory', mangaHistory);
+    }
+  }, [pageStage, readingManga]);
+
   const pageProviderValues = {
     isDarkMode,
     setIsDarkMode,
@@ -174,6 +208,12 @@ export const PageProvider = (props: {
     isMangaListLoading,
     pageStage,
     setPageStage,
+    mangaHistory,
+    setMangaHistory,
+    mangaFavorit,
+    setMangaFavorit,
+    // clientDevice,
+    // setClientDevice,
   };
 
   return (
@@ -182,16 +222,3 @@ export const PageProvider = (props: {
     </PageContext.Provider>
   );
 };
-
-export function containsWords(string: string, words: string[]) {
-  if (!words) {
-    return true;
-  }
-
-  if (words.length == 1) {
-    return string?.includes(words[0]);
-  }
-
-  const pattern = new RegExp(`\\b(${words.join('|')})\\b`, 'i');
-  return pattern.test(string);
-}

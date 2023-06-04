@@ -7,7 +7,7 @@
     flex-wrap: wrap;
     align-items: center;
     width: fit-content;
-    // height: 100px;
+    width: 100%;
     @media screen and (max-width: layout.$xs) {
         justify-content: center;
     }
