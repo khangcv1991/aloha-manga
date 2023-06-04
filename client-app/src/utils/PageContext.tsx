@@ -11,6 +11,11 @@ import { apiRequest } from './api-request';
 import { keyBy } from 'lodash';
 import { getLocalStorageItem, setLocalStorageItem } from './localstorage.util';
 
+export enum PAGE_STAGE {
+  HOME = 'home',
+  MANGA_DETAIL = 'manga detail',
+  CHAPTER_DETAIL = 'chapter detail',
+}
 interface PageContextProps {
   isDarkMode: boolean;
   setIsDarkMode: Dispatch<SetStateAction<boolean>>;
@@ -27,6 +32,8 @@ interface PageContextProps {
   setMangaFilter: Dispatch<SetStateAction<MangaFilter>>;
   filteringMangas: Manga[];
   isMangaListLoading: boolean;
+  pageStage: string;
+  setPageStage: Dispatch<SetStateAction<string>>;
 }
 
 export const PageContext = createContext<PageContextProps>({
@@ -45,6 +52,8 @@ export const PageContext = createContext<PageContextProps>({
   setMangaFilter: undefined,
   filteringMangas: undefined,
   isMangaListLoading: true,
+  pageStage: undefined,
+  setPageStage: undefined,
 });
 
 export const PageProvider = (props: {
@@ -66,6 +75,7 @@ export const PageProvider = (props: {
     searchName: undefined,
   });
   const [isMangaListLoading, setIsMangaListLoading] = useState(true);
+  const [pageStage, setPageStage] = useState(PAGE_STAGE.HOME);
 
   const mangaByMangaId = useMemo(() => keyBy(mangas, 'mangaId'), [mangas]);
   const mangaIdsByCategory = useMemo(
@@ -162,6 +172,8 @@ export const PageProvider = (props: {
     setMangaFilter,
     filteringMangas,
     isMangaListLoading,
+    pageStage,
+    setPageStage,
   };
 
   return (

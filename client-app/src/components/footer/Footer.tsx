@@ -24,17 +24,14 @@ const Footer = (): JSX.Element => {
 
   return (
     <>
-      {windowWidth < WINDOW_WIDTH_XS ? (
+      <div className={styles.footerSideBarContainer}>
         <SideBar isVertical={false} />
-      ) : (
-        <>
-          <div className={styles.footer}>
-            <div className={styles.footerWrapper}>
-              <div className={styles.content}>Aloha Manga©2023</div>
-            </div>
-          </div>
-        </>
-      )}
+      </div>
+      <div className={styles.footer}>
+        <div className={styles.footerWrapper}>
+          <div className={styles.content}>©2023 Aloha Manga</div>
+        </div>
+      </div>
     </>
   );
 };
