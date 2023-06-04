@@ -15,13 +15,15 @@ const RadioButtons = [
 
 export const MangaPage = (): JSX.Element => {
   const { mangaId } = useParams();
-  const { setPageStage, mangaByMangaId, setReadingManga } =
+  const { setPageStage, mangaByMangaId, setReadingManga, pageStage } =
     useContext(PageContext);
   const [selectedButton, setSelectedButton] = useState(RadioButtons[0]);
 
   useEffect(() => {
     setReadingManga(mangaId);
-    setPageStage(PAGE_STAGE.MANGA_DETAIL);
+    if (pageStage !== PAGE_STAGE.MANGA_DETAIL) {
+      setPageStage(PAGE_STAGE.MANGA_DETAIL);
+    }
   }, []);
 
   return (

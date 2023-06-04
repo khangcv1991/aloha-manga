@@ -40,14 +40,15 @@ export const SideBar = (props: SideBarProps) => {
 
   useEffect(() => {
     switch (pageStage) {
-      case PAGE_STAGE.HOME:
-        setSelItem(SIDE_BAR.HOME);
-        setPosition(0);
-        break;
       case PAGE_STAGE.FAVORIT:
         setSelItem(SIDE_BAR.FAVORIT);
+        setPageStage(PAGE_STAGE.FAVORIT);
         setPosition(1 * ITEM_HEIGHT);
         break;
+      default:
+        setSelItem(SIDE_BAR.HOME);
+        setPageStage(PAGE_STAGE.HOME);
+        setPosition(0);
     }
   }, []);
   return (
