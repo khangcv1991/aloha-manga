@@ -1,0 +1,14 @@
+@use '../../../styles/colors';
+@use '../../../styles/layout';
+@import "../../../styles/globals";
+.favoritButtonContainer {
+
+    cursor: pointer;
+    .favoritItem {
+        color: colors.$redRos;
+    }
+
+    .item {
+        color: colors.$greyLight2;
+    }
+}

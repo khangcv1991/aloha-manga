@@ -23,7 +23,7 @@
             z-index: 1;
 
             .item {
-                color: #fd606d;
+                color: colors.$redRos;
             }
         }
 
@@ -47,7 +47,7 @@
             width: 64px;
             height: 74px;
             position: absolute;
-            background-color: #fd606d;
+            background-color: colors.$redRos;
             border-top-right-radius: 20px;
             border-bottom-right-radius: 20px;
             z-index: 0;
@@ -97,7 +97,7 @@
             z-index: 1;
 
             .item {
-                color: #fd606d;
+                color: colors.$redRos;
                 transition: all .8s ease;
             }
         }

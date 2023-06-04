@@ -1,6 +1,6 @@
-@use '../../styles/colors';
-@use '../../styles/layout';
-@use '../../styles/mixins';
+@use '../../../styles/colors';
+@use '../../../styles/layout';
+@use '../../../styles/mixins';
 
 .container {
   display: flex;
@@ -31,7 +31,7 @@
       padding-left: 20px;
       padding-right: 20px;
       font-size: 13px !important;
-      border: 1px solid #fd606d;
+      border: 1px solid colors.$redRos;
       margin-right: 10px;
       margin-bottom: 0px;
       border-radius: 30px;
@@ -43,7 +43,7 @@
   
     .selectedItem {
       color: colors.$white;
-      background-color: #fd606d;
+      background-color: colors.$redRos;
     }
 
     .itemLoader {
@@ -76,7 +76,7 @@
   padding-right: 15px;
   align-items: center;
   justify-content: center;
-  border: 1px solid #fd606d;
+  border: 1px solid colors.$redRos;
   border-radius: 30px;
 }
 
@@ -89,7 +89,7 @@
   padding-right: 15px;
   align-items: center;
   justify-content: center;
-  border: 1px solid #fd606d;
+  border: 1px solid colors.$redRos;
   border-radius: 30px;
 }
 

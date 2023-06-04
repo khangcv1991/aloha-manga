@@ -1,32 +1,33 @@
-@use '../../styles/colors';
-@use '../../styles/layout';
-@use '../../styles/mixins';
+@use '../../../styles/colors';
+@use '../../../styles/layout';
+@use '../../../styles/mixins';
 
-.searchBarContainer{
+.searchBarContainer {
     display: flex;
     flex: 1;
     flex-direction: row;
-    input{
-        display:flex;
+
+    input {
+        display: flex;
         padding: 10px;
-        height: 40px ;
+        height: 40px;
         min-width: 250px;
-        border: 1px solid #fd606d;
+        border: 1px solid colors.$redRos;
         border-radius: 30px;
         border-bottom-right-radius: 0px;
         border-top-right-radius: 0px;
         font-size: 16px;
     }
 
-    button{
+    button {
         font-family: 'Montserrat Regular', Arial, sans-serif;
         padding: 10px;
-        border: 1px solid #fd606d;
+        border: 1px solid colors.$redRos;
         border-left: 0px;
         border-bottom-right-radius: 30px;
         border-top-right-radius: 30px;
         color: white;
-        background-color:#fd606d ;
+        background-color: colors.$redRos ;
         font-size: 16px;
     }
 }

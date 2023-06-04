@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBars,
@@ -13,6 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import styles from './sideBar.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { PAGE_STAGE, PageContext } from '../../utils/PageContext';
 
 interface SideBarProps {
   className?: string;
@@ -32,10 +33,23 @@ const ITEM_HEIGHT = 74;
 
 export const SideBar = (props: SideBarProps) => {
   const { className, isVertical = true } = props;
-  const [selItem, setSelItem] = useState(SIDE_BAR.HOME);
+  const [selItem, setSelItem] = useState<string>();
   const [position, setPosition] = useState(0);
   const navigation = useNavigate();
+  const { setPageStage, pageStage } = useContext(PageContext);
 
+  useEffect(() => {
+    switch (pageStage) {
+      case PAGE_STAGE.HOME:
+        setSelItem(SIDE_BAR.HOME);
+        setPosition(0);
+        break;
+      case PAGE_STAGE.FAVORIT:
+        setSelItem(SIDE_BAR.FAVORIT);
+        setPosition(1 * ITEM_HEIGHT);
+        break;
+    }
+  }, []);
   return (
     <>
       <div
@@ -56,6 +70,7 @@ export const SideBar = (props: SideBarProps) => {
             onClick={() => {
               setSelItem(SIDE_BAR.HOME);
               setPosition(0);
+              setPageStage(PAGE_STAGE.HOME);
               navigation('/');
             }}
           >
@@ -71,6 +86,8 @@ export const SideBar = (props: SideBarProps) => {
             onClick={() => {
               setSelItem(SIDE_BAR.FAVORIT);
               setPosition(1 * ITEM_HEIGHT);
+              setPageStage(PAGE_STAGE.FAVORIT);
+              navigation('/favorit');
             }}
           >
             <FontAwesomeIcon icon={faStar} className={styles.item} size="xl" />

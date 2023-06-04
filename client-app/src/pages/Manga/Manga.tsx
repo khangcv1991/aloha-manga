@@ -5,6 +5,9 @@ import { PAGE_STAGE, PageContext } from '../../utils/PageContext';
 import styles from './manga.module.scss';
 import GroupRadioButton from '../../components/navTab/GroupRadioButton';
 import Page from '../../components/page/Page';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { FavoritButton } from './FavoritButton/FavoritButton';
 const RadioButtons = [
   { id: 'information', title: 'Information' },
   { id: 'chapter', title: 'Chapter' },
@@ -37,6 +40,7 @@ export const MangaPage = (): JSX.Element => {
           <div className={styles.bodyContainer}>
             {selectedButton?.id === 'information' && (
               <>
+                <FavoritButton />
                 <p>{mangaByMangaId?.[mangaId]?.author}</p>
                 <p>{mangaByMangaId?.[mangaId]?.categories?.join(', ')}</p>
 

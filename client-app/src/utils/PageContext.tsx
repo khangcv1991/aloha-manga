@@ -8,12 +8,14 @@ import React, {
   useState,
 } from 'react';
 import { apiRequest } from './api-request';
-import { keyBy } from 'lodash';
+import { keyBy, uniqBy } from 'lodash';
 import { getLocalStorageItem, setLocalStorageItem } from './localstorage.util';
 import FingerprintJS from 'fingerprintjs2';
 
 export enum PAGE_STAGE {
   HOME = 'home',
+  FAVORIT = 'favorit',
+  HISTORY = 'history',
   MANGA_DETAIL = 'manga detail',
   CHAPTER_DETAIL = 'chapter detail',
 }
@@ -88,7 +90,9 @@ export const PageProvider = (props: {
     searchName: undefined,
   });
   const [isMangaListLoading, setIsMangaListLoading] = useState(true);
-  const [pageStage, setPageStage] = useState(PAGE_STAGE.HOME);
+  const [pageStage, setPageStage] = useState<string>(
+    getLocalStorageItem('pageStage'),
+  );
   const [mangaHistory, setMangaHistory] = useState(
     getLocalStorageItem<MangaHistory[]>('mangaHistory'),
   );
@@ -119,30 +123,59 @@ export const PageProvider = (props: {
 
   const filteringMangas = useMemo(() => {
     console.log(mangaFilter);
-    if (mangaFilter && mangaFilter.searchName?.trim().length > 0) {
-      return mangas.filter((manga) => {
-        if (!manga.title) {
-          return false;
+    switch (pageStage) {
+      case PAGE_STAGE.HOME:
+        if (mangaFilter && mangaFilter.searchName?.trim().length > 0) {
+          return mangas.filter((manga) => {
+            if (!manga.title) {
+              return false;
+            }
+            return manga.title
+              ?.toLowerCase()
+              ?.includes(mangaFilter.searchName?.toLocaleLowerCase());
+          });
         }
-        return manga.title
-          ?.toLowerCase()
-          ?.includes(mangaFilter.searchName?.toLocaleLowerCase());
-      });
-    }
 
-    if (
-      mangaFilter &&
-      mangaFilter.categories.length > 0 &&
-      mangaFilter.categories[0] !== '' &&
-      mangaFilter.categories[0] !== 'all'
-    ) {
-      return mangaIdsByCategory?.[mangaFilter.categories[0]]?.map(
-        (id: string) => mangaByMangaId?.[id],
-      );
-    }
+        if (
+          mangaFilter &&
+          mangaFilter.categories.length > 0 &&
+          mangaFilter.categories[0] !== '' &&
+          mangaFilter.categories[0] !== 'all'
+        ) {
+          return mangaIdsByCategory?.[mangaFilter.categories[0]]?.map(
+            (id: string) => mangaByMangaId?.[id],
+          );
+        }
 
-    return mangas;
-  }, [mangaFilter, mangas]);
+        return mangas;
+      case PAGE_STAGE.FAVORIT:
+        const list = mangaFavorit.map((item) => mangaByMangaId?.[item.mangaId]);
+        if (mangaFilter && mangaFilter.searchName?.trim().length > 0) {
+          return list.filter((manga) => {
+            if (!manga.title) {
+              return false;
+            }
+            return manga.title
+              ?.toLowerCase()
+              ?.includes(mangaFilter.searchName?.toLocaleLowerCase());
+          });
+        }
+
+        if (
+          mangaFilter &&
+          mangaFilter.categories.length > 0 &&
+          mangaFilter.categories[0] !== '' &&
+          mangaFilter.categories[0] !== 'all'
+        ) {
+          const mangaFavoritbyMangaId = keyBy(mangaFavorit, 'mangaId');
+          return mangaIdsByCategory?.[mangaFilter.categories[0]]
+            ?.filter((item) => mangaFavoritbyMangaId?.[item])
+            .map((id: string) => mangaByMangaId?.[id]);
+        }
+
+        return list;
+    }
+  }, [mangaFilter, mangas, pageStage]);
 
   useEffect(() => {
     void (async () => {
@@ -189,6 +222,15 @@ export const PageProvider = (props: {
       setLocalStorageItem('mangaHistory', mangaHistory);
     }
   }, [pageStage, readingManga]);
+
+  useEffect(() => {
+    const uniqMangaList = uniqBy(mangaFavorit, 'mangaId');
+    setLocalStorageItem('mangaFavorit', uniqMangaList);
+  }, [mangaFavorit]);
+
+  useEffect(() => {
+    setLocalStorageItem('pageStage', pageStage);
+  }, [pageStage]);
 
   const pageProviderValues = {
     isDarkMode,
