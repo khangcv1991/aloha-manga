@@ -10,6 +10,8 @@ import * as https from 'https';
 const IS_OFFLINE = process.env.IS_OFFLINE; // Set by serverless-offline https://github.com/dherault/serverless-offline
 
 export let dynamoDb: AWS.DynamoDB.DocumentClient | undefined = undefined;
+export let localDynamoDb: AWS.DynamoDB.DocumentClient | undefined = undefined;
+export let remoteDynamoDb: AWS.DynamoDB.DocumentClient | undefined = undefined;
 
 function newDynamodbConnection(): DocumentClient {
   console.log('DynamoDB Init');
@@ -19,7 +21,7 @@ function newDynamodbConnection(): DocumentClient {
     maxSockets: Infinity, // Infinity is read as 50 sockets
   });
   let newConnection: AWS.DynamoDB.DocumentClient;
-  if (IS_OFFLINE === 'true') {
+  if (IS_OFFLINE) {
     newConnection = new AWS.DynamoDB.DocumentClient({
       region: 'localhost',
       endpoint: 'http://localhost:8000',
@@ -41,6 +43,33 @@ export const getDynamodbConnection = (): DocumentClient => {
     dynamoDb = newDynamodbConnection();
   }
   return dynamoDb;
+};
+
+export const getLocalDynamodbConnection = (): DocumentClient => {
+  if (typeof localDynamoDb === 'undefined') {
+    localDynamoDb = new AWS.DynamoDB.DocumentClient({
+      region: 'localhost',
+      endpoint: 'http://localhost:8000',
+    });
+  }
+  return localDynamoDb;
+};
+
+export const getRemotelDynamodbConnection = (): DocumentClient => {
+  const agent = new https.Agent({
+    keepAlive: true,
+    maxSockets: Infinity, // Infinity is read as 50 sockets
+  });
+  if (typeof remoteDynamoDb === 'undefined') {
+    remoteDynamoDb = new AWS.DynamoDB.DocumentClient({
+      httpOptions: {
+        agent,
+      },
+      paramValidation: false,
+      convertResponseTypes: false,
+    });
+  }
+  return remoteDynamoDb;
 };
 
 interface getParams {

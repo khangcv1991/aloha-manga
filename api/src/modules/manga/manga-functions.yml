@@ -52,3 +52,24 @@ client-api-manga:
             - X-Amz-Security-Token
             - X-Amz-User-Agent
           allowCredentials: false
+admin-api-manga:
+  handler: src/modules/manga/manga-admin-api.handler
+  events:
+    - http:
+        path: /admin/manga/{any+}
+        method: ANY
+        # authorizer: # https://www.serverless.com/framework/docs/providers/aws/events/apigateway#http-endpoints-with-aws_iam-authorizers
+        #   type: COGNITO_USER_POOLS
+        #   authorizerId:
+        #     Ref: ApiGatewayAuthorizer
+        cors:
+          origin: ${self:custom.apiCorsOrigin}
+          headers:
+            - Content-Type
+            - X-Amz-Date
+            - Authorization
+            - X-Api-Key
+            - X-Amz-Security-Token
+            - X-Amz-User-Agent
+          allowCredentials: false
+   

@@ -5,7 +5,7 @@ provider:
   stage: ${opt:stage}
   region: ${env:REGION}
   architecture: arm64
-  timeout: 30
+  timeout: 900
   memorySize: 2048
   logRetentionInDays: 90
   versionFunctions: false
