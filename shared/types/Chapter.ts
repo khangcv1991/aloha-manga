@@ -5,3 +5,8 @@ export interface Chapter {
   imageLinks?: string[];
   isDownload: boolean;
 }
+
+export interface ChapterHistory {
+  chapterId: string;
+  createdAt: string;
+}

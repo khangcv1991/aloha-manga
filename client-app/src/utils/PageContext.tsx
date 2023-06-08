@@ -10,6 +10,8 @@ import React, {
 import { apiRequest } from './api-request';
 import { keyBy, uniqBy } from 'lodash';
 import { getLocalStorageItem, setLocalStorageItem } from './localstorage.util';
+import { ChapterHistory } from '@shared/types/Chapter';
+import { getMangaNameFromChapter } from './manga.util';
 
 export enum PAGE_STAGE {
   HOME = 'home',
@@ -36,8 +38,8 @@ interface PageContextProps {
   isMangaListLoading: boolean;
   pageStage: string;
   setPageStage: Dispatch<SetStateAction<string>>;
-  mangaHistory: MangaHistory[];
-  setMangaHistory: Dispatch<SetStateAction<MangaHistory[]>>;
+  mangaHistory: Record<string, string[]>;
+  setMangaHistory: Dispatch<SetStateAction<Record<string, string[]>>>;
   mangaFavorit: MangaHistory[];
   setMangaFavorit: Dispatch<SetStateAction<MangaHistory[]>>;
   // clientDevice: string;
@@ -93,7 +95,7 @@ export const PageProvider = (props: {
     getLocalStorageItem('pageStage'),
   );
   const [mangaHistory, setMangaHistory] = useState(
-    getLocalStorageItem<MangaHistory[]>('mangaHistory'),
+    getLocalStorageItem<Record<string, string[]>>('mangaHistory') || {},
   );
   const [mangaFavorit, setMangaFavorit] = useState(
     getLocalStorageItem<MangaHistory[]>('mangaFavorit'),
@@ -205,20 +207,17 @@ export const PageProvider = (props: {
   }, [readingChapter]);
 
   useEffect(() => {
-    if (pageStage === PAGE_STAGE.MANGA_DETAIL && readingManga) {
-      const mangaHistoryByMangaId = keyBy(mangaHistory, 'mangaId');
-      if (mangaHistoryByMangaId && !mangaHistoryByMangaId[readingManga]) {
-        setMangaHistory([
-          ...(mangaHistory || []),
-          { mangaId: readingManga, createdAt: new Date().toISOString() },
-        ]);
-      } else if (!mangaHistory) {
-        setMangaHistory([
-          { mangaId: readingManga, createdAt: new Date().toISOString() },
-        ]);
+    if (pageStage === PAGE_STAGE.CHAPTER_DETAIL && readingChapter) {
+      const mangaId = getMangaNameFromChapter(readingChapter);
+      const tmpList = mangaHistory[mangaId] || [];
+      if (!tmpList.includes(readingChapter)) {
+        tmpList.push(readingChapter);
       }
 
-      setLocalStorageItem('mangaHistory', mangaHistory);
+      const updatedMangaHistory = { ...mangaHistory, [mangaId]: tmpList };
+      setMangaHistory(updatedMangaHistory);
+
+      setLocalStorageItem('mangaHistory', updatedMangaHistory);
     }
   }, [pageStage, readingManga]);
 

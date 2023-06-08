@@ -7,13 +7,26 @@ import { ChapterNav } from './ChapterNav/ChapterNav';
 import { PAGE_STAGE, PageContext } from '../../utils/PageContext';
 import Page from '../../components/page/Page';
 import { ChapterDetail } from './chapterDetail/ChapterDetail';
+import { getMangaNameFromChapter } from '../../utils/manga.util';
 
 export const ChapterPage = (): JSX.Element => {
   const { chapterId } = useParams();
-  const { setReadingChapter, setPageStage } = useContext(PageContext);
+  const {
+    setReadingChapter,
+    setPageStage,
+    mangaByMangaId,
+    readingManga,
+    setReadingManga,
+  } = useContext(PageContext);
   const [images, setImages] = useState<string[]>([]);
 
   useEffect(() => {
+    const mangaId = getMangaNameFromChapter(chapterId);
+
+    if (mangaId !== readingManga) {
+      setReadingManga(mangaId);
+    }
+
     void (async () => {
       try {
         const chapterResponse = await apiRequest<Chapter>({
