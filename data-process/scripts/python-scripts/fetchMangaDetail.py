@@ -37,7 +37,7 @@ def fetch_links_from_database():
     create_manga_table(conn)
     cursor.execute("SELECT link FROM links")
     links = cursor.fetchall()
-    start_urls = [WEB_URL + link[0] for link in links]
+    start_urls = [link[0] for link in links]
     conn.close()
     print(start_urls)
     return start_urls
@@ -104,6 +104,14 @@ class LinkSpider(scrapy.Spider):
                 manga_link, title, author, image_link, description,
                 ','.join(categories), ','.join(chapter_links), created_at
             ))
+            print ("insert new manga")
+            conn.commit()
+        elif existing_manga_link[6] != ','.join(chapter_links):
+            cursor.execute("""
+                UPDATE manga SET chapterLinks = ? WHERE mangaLink = ?
+            """, (','.join(chapter_links), manga_link))
+            print ("update existing manga")
+
             conn.commit()
 
         conn.close()
