@@ -10,7 +10,6 @@ import React, {
 import { apiRequest } from './api-request';
 import { keyBy, uniqBy } from 'lodash';
 import { getLocalStorageItem, setLocalStorageItem } from './localstorage.util';
-import FingerprintJS from 'fingerprintjs2';
 
 export enum PAGE_STAGE {
   HOME = 'home',
