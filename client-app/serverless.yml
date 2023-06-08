@@ -1,4 +1,4 @@
-service: aloha-manga
+service: aloha-manga-client-website
 
 # Options
 # - region

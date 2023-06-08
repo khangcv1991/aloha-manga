@@ -21,7 +21,7 @@
     max-width: layout.$maxWidth;
     .searchBarContainer {
       @media screen and (max-width: layout.$xs) {
-        display: none;
+        // display: none;
       }
     }
     img {

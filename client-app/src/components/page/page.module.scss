@@ -6,13 +6,12 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  padding-top: 20px;
 
   .container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    height: calc(100vh - 70px);
+    height: calc(100vh - 50px);
 
     .leftContainer {
       display: flex;
