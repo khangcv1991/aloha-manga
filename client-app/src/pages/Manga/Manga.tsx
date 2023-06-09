@@ -15,8 +15,14 @@ const RadioButtons = [
 
 export const MangaPage = (): JSX.Element => {
   const { mangaId } = useParams();
-  const { setPageStage, mangaByMangaId, setReadingManga, pageStage } =
-    useContext(PageContext);
+  const {
+    setPageStage,
+    mangaByMangaId,
+    setReadingManga,
+    pageStage,
+    mangaHistory,
+    readingManga,
+  } = useContext(PageContext);
   const [selectedButton, setSelectedButton] = useState(RadioButtons[0]);
 
   useEffect(() => {
@@ -52,6 +58,7 @@ export const MangaPage = (): JSX.Element => {
             {selectedButton?.id === 'chapter' && (
               <ChapterList
                 chapterLinks={mangaByMangaId?.[mangaId]?.chapterLinks || []}
+                readChapters={mangaHistory?.[readingManga]}
               />
             )}
           </div>

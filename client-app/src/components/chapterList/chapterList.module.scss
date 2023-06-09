@@ -19,5 +19,9 @@
         justify-content: center;
         padding: 10px;
         cursor: pointer;
+
+        .readManga {
+            color: colors.$greyLight2;
+        }
     }
 }

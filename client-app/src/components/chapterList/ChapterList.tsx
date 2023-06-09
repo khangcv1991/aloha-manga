@@ -5,12 +5,13 @@ import { PageContext } from '../../utils/PageContext';
 
 interface ChapterListProps {
   chapterLinks: string[];
+  readChapters?: string[];
 }
 export const ChapterList = (props: ChapterListProps): JSX.Element => {
-  const { chapterLinks } = props;
+  const { chapterLinks, readChapters } = props;
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
-  const { readingChapter, setReadingChapter } = useContext(PageContext);
+  const { setReadingChapter } = useContext(PageContext);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -37,7 +38,13 @@ export const ChapterList = (props: ChapterListProps): JSX.Element => {
               setReadingChapter(chapter);
             }}
           >
-            Chapter {Number((chapterLinks?.length || 0) - index)}
+            <div
+              className={
+                readChapters?.includes(chapter) ? styles.readManga : ''
+              }
+            >
+              Chapter {Number((chapterLinks?.length || 0) - index)}
+            </div>
           </div>
         ))}
       </div>
