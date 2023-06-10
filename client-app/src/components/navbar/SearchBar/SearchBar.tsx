@@ -22,36 +22,6 @@ const SearchBar = (): JSX.Element => {
         />
         <button onClick={() => {}}>Search</button>
       </div>
-      <div className={styles.searchBarMobileContainer}>
-        <div className={styles.searchButtonContainer}>
-          {isSearchVisible && (
-            <input
-              type="text"
-              value={mangaFilter.searchName}
-              onChange={(e) => {
-                setMangaFilter({
-                  ...mangaFilter,
-                  searchName: e?.target?.value || '',
-                });
-              }}
-            />
-          )}
-          <FontAwesomeIcon
-            icon={faSearch}
-            className={styles.item}
-            size="xl"
-            onClick={() => {
-              if (isSearchVisible) {
-                setMangaFilter({
-                  ...mangaFilter,
-                  searchName: '',
-                });
-              }
-              setIsSearchVisible((prev) => !prev);
-            }}
-          />
-        </div>
-      </div>
     </>
   );
 };

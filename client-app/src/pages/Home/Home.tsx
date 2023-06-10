@@ -4,6 +4,7 @@ import MangaList from '../../components/mangaList/MangaList';
 import { PAGE_STAGE, PageContext } from '../../utils/PageContext';
 import Navbar from '../../components/navbar/Navbar';
 import styles from './home.module.scss';
+import { SearchModal } from '../../components/navbar/SearchModal/SearchModal';
 
 const Home = (): JSX.Element => {
   const { mangas, filteringMangas, setPageStage } = useContext(PageContext);
@@ -16,6 +17,7 @@ const Home = (): JSX.Element => {
     <Page title="Home">
       <Navbar />
       <MangaList mangas={filteringMangas} className={styles.mangaList} />
+      <SearchModal />
     </Page>
   );
 };

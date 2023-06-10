@@ -1,0 +1,61 @@
+@use '../../../styles/colors';
+@use '../../../styles/layout';
+@use '../../../styles/mixins';
+
+.searchBarMobileContainer {
+    display: none;
+    @media screen and (max-width: layout.$xs) {
+        display: block;
+        position: fixed;
+        bottom: 70px;
+        right:  20px;
+    }
+ 
+    .searchButtonContainer {
+        display:flex;
+        background-color: colors.$redRos;
+        color: white;
+        width: 60px;
+        height: 60px;
+        align-items: center;
+        justify-content: center;
+        padding: 0px;
+        border-radius: 30px;
+    }
+
+    input {
+        border-radius: 10px;
+        height: 30px;
+        margin-right: 10px;
+    }
+}
+
+.searchModalContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 15;
+    width: 100%;
+    height: 100%;
+    background-color: colors.$black;
+    opacity: 80%;
+    
+    input {
+        position: fixed;
+        z-index: 20;
+        top: 5%;
+        left: 20px;
+        height: 40px;
+    }
+}
+
+.searchModalInput {
+    z-index: 20;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    border-radius: 20px;
+    width: calc(100% - 40px);
+    height: 40px;
+    padding: 10px
+}
