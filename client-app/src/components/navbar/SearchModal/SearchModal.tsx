@@ -14,19 +14,20 @@ export const SearchModal = (): JSX.Element => {
 
   return (
     <>
-      <input
-        className={styles.searchModalInput}
-        ref={inputRef}
-        type="text"
-        value={mangaFilter.searchName}
-        onChange={(e) => {
-          setMangaFilter({
-            ...mangaFilter,
-            searchName: e?.target?.value || '',
-          });
-        }}
-        style={{ display: visible ? 'flex' : 'none' }}
-      />
+      {visible && (
+        <input
+          className={styles.searchModalInput}
+          ref={inputRef}
+          type="text"
+          value={mangaFilter.searchName}
+          onChange={(e) => {
+            setMangaFilter({
+              ...mangaFilter,
+              searchName: e?.target?.value || '',
+            });
+          }}
+        />
+      )}
 
       <div className={styles.searchBarMobileContainer}>
         {visible ? (
@@ -49,6 +50,7 @@ export const SearchModal = (): JSX.Element => {
                     searchName: '',
                   });
                 }
+
                 inputRef?.current?.focus();
                 setVisible((prev) => {
                   return !prev;
