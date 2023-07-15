@@ -4,6 +4,10 @@ provider:
   runtime: nodejs14.x
   stage: ${opt:stage}
   region: ${env:REGION}
+  # stackTags:
+  #   Profile: ${param:profile}
+  #   Stage: ${opt:stage}
+  #   Region: ${opt:region}
   architecture: arm64
   timeout: 900
   memorySize: 2048
