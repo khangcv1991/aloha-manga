@@ -1,7 +1,6 @@
 {
   "name": "data-process",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "scrapy:links": "scrapy runspider ./scripts/python-scripts/fetchMangaLinks.py",
@@ -9,8 +8,17 @@
     "seed:manga": "python3 ./scripts/python-scripts/generateMangaSeed.py ../api/src/modules/manga/manga.seed.json",
     "seed:chapter": "python3 ./scripts/python-scripts/generateChapterSeed.py ../api/src/modules/chapter/chapter.seed.json",
     "dynamodb:chapter": "python3 ./scripts/python-scripts/generateChapterDynamoData.py ../api/src/modules/chapter/chapter.db.csv",
-    "dynamodb:manga": "python3 ./scripts/python-scripts/generateMangaDynamoData.py ../api/src/modules/manga/manga.db.csv"
+    "dynamodb:manga": "python3 ./scripts/python-scripts/generateMangaDynamoData.py ../api/src/modules/manga/manga.db.csv",
+    "start": "./scripts/run-local-api.sh"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "serverless-dynamodb-local": "^0.2.40",
+    "serverless-dynamodb-seed": "^0.3.0",
+    "serverless-offline": "^12.0.4",
+    "serverless-offline-watcher": "^1.1.0",
+    "serverless-python-requirements": "^6.0.0"
+  }
 }

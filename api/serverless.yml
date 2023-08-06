@@ -40,7 +40,6 @@ functions:
 plugins:
   - serverless-esbuild
   - serverless-dynamodb-local
-  - serverless-dynamodb-seed
   - serverless-offline-watcher
   - serverless-offline
 custom:

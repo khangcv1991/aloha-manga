@@ -1,0 +1,52 @@
+service: ${env:PROFILE}-data-process
+
+provider:
+  name: aws
+  runtime: python3.8
+  stage: ${opt:stage}
+  region: ${env:REGION}
+  environment:
+    DYNAMODB_ENDPOINT: http://localhost:8000
+    API_REGION: ${env:REGION}
+    MANGA_LINKS_TABLE: manga-links-${env:PROFILE}-${opt:stage}
+    MANGA_TABLE: manga-${env:PROFILE}-${opt:stage}
+    CHAPTER_TABLE: chapter-${env:PROFILE}-${opt:stage}
+    API_CORS_ORIGIN: ${self:custom.apiCorsOrigin}
+    iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource: 
+        - !Sub ${mangaLinksTable.Arn}
+        - !Sub ${mangaLinksTable.Arn}/index/* 
+        - !Sub ${mangaTable.Arn}
+        - !Sub ${mangaTable.Arn}/index/* 
+        - !Sub ${chapterTable.Arn}
+        - !Sub ${chapterTable.Arn}/index/* 
+      
+custom:
+  apiCorsOrigin: '*'
+  serverless-offline:
+    httpPort: 4000
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+      # seed: true
+
+plugins:
+  - serverless-dynamodb-local
+  - serverless-dynamodb-seed
+  - serverless-offline-watcher
+  - serverless-offline
+
+functions:
+  ${file(./src/modules/schedule/schedule-functions.yml)}
+resources:
+  - ${file(./src/modules/manga_link/manga-link-dynamodb.yml)}
+  - ${file(./src/modules/manga/manga-dynamodb.yml)}
+  - ${file(./src/modules/chapter/chapter-dynamodb.yml)}
+
